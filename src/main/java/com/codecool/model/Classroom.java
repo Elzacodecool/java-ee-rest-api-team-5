@@ -1,4 +1,4 @@
 package com.codecool.model;
 
-public class Admin {
+public class Classroom {
 }
