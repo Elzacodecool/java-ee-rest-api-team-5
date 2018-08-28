@@ -1,30 +1,31 @@
 package com.codecool.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class ClassRoom {
+    @OneToMany(mappedBy = "classRoom")
+    @ElementCollection
+    List<Student> studentsList = new ArrayList<>();
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String className;
 
-    @OneToMany(mappedBy = "")
+    @ManyToMany(mappedBy = "classRoom")
     @ElementCollection
-    private List<Student> studentsList;
-
-    @ManyToMany
-    @ElementCollection
-    private List<Mentor> mentorsList;
+    private List<Mentor> mentorsList = new ArrayList<>();
 
     public ClassRoom() {}
 
-    public ClassRoom(String className, List<Student> studentsList, List<Mentor> mentorsList) {
+    public ClassRoom(String className) {
         this.className = className;
-        this.studentsList = studentsList;
-        this.mentorsList = mentorsList;
     }
 
     public String getClassName() {
@@ -39,15 +40,17 @@ public class ClassRoom {
         return studentsList;
     }
 
-    public void setStudentsList(List<Student> studentsList) {
-        this.studentsList = studentsList;
-    }
-
     public List<Mentor> getMentorsList() {
         return mentorsList;
     }
 
-    public void setMentorsList(List<Mentor> mentorsList) {
-        this.mentorsList = mentorsList;
+    public void addStudent(Student student) {
+        studentsList.add(student);
+        student.setClass(this);
+    }
+
+    public void addMentor(Mentor mentor) {
+        this.mentorsList.add(mentor);
+        mentor.addClass(this);
     }
 }
