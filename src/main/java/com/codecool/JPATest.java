@@ -42,5 +42,8 @@ public class JPATest {
 
         populateDb(em);
 
+        em.close();
+        emf.close();
+
     }
 }
