@@ -3,6 +3,7 @@ package com.codecool.model;
 import javax.persistence.*;
 import java.util.List;
 
+@Entity
 public class ClassRoom {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -10,8 +11,10 @@ public class ClassRoom {
 
     private String className;
 
+    @OneToMany
     private List<Student> studentsList;
 
+    @ManyToMany
     private List<Mentor> mentorsList;
 
     public ClassRoom() {}
