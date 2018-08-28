@@ -1,6 +1,7 @@
 package com.codecool;
 
 import com.codecool.model.ClassRoom;
+import com.codecool.model.Language;
 import com.codecool.model.Mentor;
 import com.codecool.model.Student;
 
@@ -13,8 +14,9 @@ import java.util.List;
 
 public class JPATest {
     public static void populateDb(EntityManager em) {
-        List<String> languageList = new ArrayList<>();
-        languageList.add("Java");
+        List<Language> languageList = new ArrayList<>();
+        Language languageJava = new Language("Java");
+        languageList.add(languageJava);
         Mentor mentor = new Mentor("Marcin Izworski", "m.izworski@gmail.com","123456789",languageList);
         Student student = new Student("Elzbieta Krzych", "elzbieta.krzych@gmail.com","123456789", mentor);
 
@@ -24,13 +26,14 @@ public class JPATest {
         List<Mentor> mentorList = new ArrayList<>();
         mentorList.add(mentor);
 
-        ClassRoom classA = new ClassRoom("webRoom", studentList,mentorList);
+        ClassRoom classA = new ClassRoom("webRoom", studentList, mentorList);
 
         EntityTransaction transaction = em.getTransaction();
 
         transaction.begin();
-        em.persist(student);
+        em.persist(languageJava);
         em.persist(mentor);
+        em.persist(student);
         em.persist(classA);
         transaction.commit();
 
