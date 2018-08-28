@@ -1,3 +1,4 @@
+
 package com.codecool.model;
 
 import javax.persistence.Entity;
