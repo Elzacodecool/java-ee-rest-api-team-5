@@ -1,8 +1,12 @@
 package com.codecool.model;
 
+import javax.persistence.*;
 import java.util.List;
 
 public class ClassRoom {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     private String className;
 
