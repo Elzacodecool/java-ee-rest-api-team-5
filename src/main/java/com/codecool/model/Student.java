@@ -4,17 +4,22 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "students")
-public class Student extends Person {
+public class Student {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @OneToOne
+    private PersonDetails details;
 
     @ManyToOne
     private Mentor personalMentor;
 
     public Student() {
-        super();
     }
 
-    public Student(String name, String email, String phoneNumber, Mentor mentor) {
-        super(name, email, phoneNumber);
+    public Student(PersonDetails details, Mentor mentor) {
+        this.details = details;
         this.personalMentor = mentor;
     }
 

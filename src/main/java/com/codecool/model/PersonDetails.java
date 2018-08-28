@@ -2,8 +2,8 @@ package com.codecool.model;
 
 import javax.persistence.*;
 
-@MappedSuperclass
-public abstract class Person {
+@Entity
+public class PersonDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,9 +15,9 @@ public abstract class Person {
 
     private String phoneNumber;
 
-    public Person() {}
+    public PersonDetails() {}
 
-    public Person(String name, String email, String phoneNumber) {
+    public PersonDetails(String name, String email, String phoneNumber) {
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;

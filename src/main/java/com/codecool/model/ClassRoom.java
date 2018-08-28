@@ -11,9 +11,11 @@ public class ClassRoom {
 
     private String className;
 
+    @OneToMany(mappedBy = "")
     @ElementCollection
     private List<Student> studentsList;
 
+    @ManyToMany
     @ElementCollection
     private List<Mentor> mentorsList;
 

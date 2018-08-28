@@ -1,27 +1,36 @@
 package com.codecool.model;
 
-import javax.persistence.CollectionTable;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "mentors")
-public class Mentor extends Person {
-    @ElementCollection
-    @CollectionTable(name = "mentor_languages")
-    private List<String> languages;
+public class Mentor {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @OneToOne
+    private PersonDetails details;
+
+    @ManyToMany
+    private List<Language> languages;
 
     public Mentor() {
-        super();
     }
 
-    public Mentor(String name, String email, String phoneNumber, List<String> languages) {
-        super(name, email, phoneNumber);
+    public Mentor(PersonDetails details, List<Language> languages) {
+        this.details = details;
         this.languages = languages;
     }
 
+    public List<Language> getLanguages() {
+        return languages;
+    }
+
+    public void setLanguages(List<Language> languages) {
+        this.languages = languages;
+    }
     public List<ClassRoom> getClassRoomList() {
         return null;
     }

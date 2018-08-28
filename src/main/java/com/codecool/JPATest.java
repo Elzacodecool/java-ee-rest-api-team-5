@@ -1,8 +1,6 @@
 package com.codecool;
 
-import com.codecool.model.ClassRoom;
-import com.codecool.model.Mentor;
-import com.codecool.model.Student;
+import com.codecool.model.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -13,10 +11,15 @@ import java.util.List;
 
 public class JPATest {
     public static void populateDb(EntityManager em) {
-        List<String> languageList = new ArrayList<>();
-        languageList.add("Java");
-        Mentor mentor = new Mentor("Marcin Izworski", "m.izworski@gmail.com","123456789",languageList);
-        Student student = new Student("Elzbieta Krzych", "elzbieta.krzych@gmail.com","123456789", mentor);
+        List<Language> languageList = new ArrayList<>();
+        Language languageJava = new Language("Java");
+        languageList.add(languageJava);
+
+        PersonDetails mentorDetails = new PersonDetails("Marcin Izworski", "m.izworski@gmail.com","123456789");
+        Mentor mentor = new Mentor(mentorDetails, languageList);
+
+        PersonDetails studentDetails = new PersonDetails("Elzbieta Krzych", "elzbieta.krzych@gmail.com","123456789");
+        Student student = new Student(studentDetails, mentor);
 
         List<Student> studentList = new ArrayList<>();
         studentList.add(student);
@@ -24,13 +27,16 @@ public class JPATest {
         List<Mentor> mentorList = new ArrayList<>();
         mentorList.add(mentor);
 
-        ClassRoom classA = new ClassRoom("webRoom", studentList,mentorList);
+        ClassRoom classA = new ClassRoom("webRoom", studentList, mentorList);
 
         EntityTransaction transaction = em.getTransaction();
 
         transaction.begin();
-        em.persist(student);
+        em.persist(languageJava);
+        em.persist(mentorDetails);
+        em.persist(studentDetails);
         em.persist(mentor);
+        em.persist(student);
         em.persist(classA);
         transaction.commit();
 
