@@ -1,25 +1,24 @@
 package com.codecool.model;
 
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 import java.util.List;
 
+@Entity
 public class Mentor extends Person {
-
-    private List<ClassRoom> classRoomList;
+    private List<String> languages;
 
     public Mentor() {
         super();
     }
 
-    public Mentor(String name, String email, String phoneNumber, List<ClassRoom> classRoomList) {
+    public Mentor(String name, String email, String phoneNumber, List<String> languages) {
         super(name, email, phoneNumber);
-        this.classRoomList = classRoomList;
+        this.languages = languages;
     }
 
     public List<ClassRoom> getClassRoomList() {
-        return classRoomList;
-    }
-
-    public void setClassRoomList(List<ClassRoom> classRoomList) {
-        this.classRoomList = classRoomList;
+        return null;
     }
 }
