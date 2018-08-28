@@ -8,7 +8,7 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>com.codecool.model.Student</class>
         <class>com.codecool.model.Mentor</class>
-        <class>com.codecool.model.Person</class>
+        <class>com.codecool.model.PersonDetails</class>
         <class>com.codecool.model.Language</class>
         <class>com.codecool.model.ClassRoom</class>
         <properties>

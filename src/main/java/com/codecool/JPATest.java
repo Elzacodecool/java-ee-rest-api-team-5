@@ -1,9 +1,6 @@
 package com.codecool;
 
-import com.codecool.model.ClassRoom;
-import com.codecool.model.Language;
-import com.codecool.model.Mentor;
-import com.codecool.model.Student;
+import com.codecool.model.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -17,8 +14,12 @@ public class JPATest {
         List<Language> languageList = new ArrayList<>();
         Language languageJava = new Language("Java");
         languageList.add(languageJava);
-        Mentor mentor = new Mentor("Marcin Izworski", "m.izworski@gmail.com","123456789",languageList);
-        Student student = new Student("Elzbieta Krzych", "elzbieta.krzych@gmail.com","123456789", mentor);
+
+        PersonDetails mentorDetails = new PersonDetails("Marcin Izworski", "m.izworski@gmail.com","123456789");
+        Mentor mentor = new Mentor(mentorDetails, languageList);
+
+        PersonDetails studentDetails = new PersonDetails("Elzbieta Krzych", "elzbieta.krzych@gmail.com","123456789");
+        Student student = new Student(studentDetails, mentor);
 
         List<Student> studentList = new ArrayList<>();
         studentList.add(student);
@@ -32,6 +33,8 @@ public class JPATest {
 
         transaction.begin();
         em.persist(languageJava);
+        em.persist(mentorDetails);
+        em.persist(studentDetails);
         em.persist(mentor);
         em.persist(student);
         em.persist(classA);

@@ -1,10 +1,13 @@
 package com.codecool.model;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import java.util.List;
 
 @Entity
+@Table(name = "mentors")
 public class Mentor extends Person {
     @ManyToMany
     private List<Language> languages;
