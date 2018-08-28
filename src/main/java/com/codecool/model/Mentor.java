@@ -1,7 +1,10 @@
 package com.codecool.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "mentors")
@@ -15,6 +18,9 @@ public class Mentor {
 
     @ManyToMany
     private List<Language> languages;
+
+    @OneToMany(mappedBy = "mentorsList")
+    private List<ClassRoom> classRoom = new ArrayList<>();
 
     public Mentor() {
     }
@@ -31,7 +37,7 @@ public class Mentor {
     public void setLanguages(List<Language> languages) {
         this.languages = languages;
     }
-    public List<ClassRoom> getClassRoomList() {
-        return null;
+    public void addClass(ClassRoom classRoom) {
+        this.classRoom.add(classRoom);
     }
 }

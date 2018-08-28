@@ -27,7 +27,7 @@ public class JPATest {
         List<Mentor> mentorList = new ArrayList<>();
         mentorList.add(mentor);
 
-        ClassRoom classA = new ClassRoom("webRoom", studentList, mentorList);
+        ClassRoom classA = new ClassRoom("webRoom");
 
         EntityTransaction transaction = em.getTransaction();
 

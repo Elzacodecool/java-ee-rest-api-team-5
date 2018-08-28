@@ -15,6 +15,9 @@ public class Student {
     @ManyToOne
     private Mentor personalMentor;
 
+    @OneToOne
+    private ClassRoom classRoom;
+
     public Student() {
     }
 
@@ -29,5 +32,10 @@ public class Student {
 
     public void setPersonalMentor(Mentor personalMentor) {
         this.personalMentor = personalMentor;
+    }
+
+    public void setClass(ClassRoom classRoom) {
+        this.classRoom = classRoom;
+
     }
 }
