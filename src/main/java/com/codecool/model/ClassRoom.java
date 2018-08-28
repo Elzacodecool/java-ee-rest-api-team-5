@@ -1,15 +1,20 @@
 package com.codecool.model;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
 public class ClassRoom {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     private String className;
 
+    @ElementCollection
     private List<Student> studentsList;
 
+    @ElementCollection
     private List<Mentor> mentorsList;
 
     public ClassRoom() {}
