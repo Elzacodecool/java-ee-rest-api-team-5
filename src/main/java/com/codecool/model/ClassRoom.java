@@ -1,7 +1,9 @@
 package com.codecool.model;
 
+import javax.persistence.Entity;
 import java.util.List;
 
+@Entity
 public class ClassRoom {
 
     private String className;

@@ -1,5 +1,8 @@
 package com.codecool.model;
 
+import javax.persistence.Entity;
+
+@Entity
 public class Student extends Person {
 
     private Mentor personalMentor;
