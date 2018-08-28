@@ -2,8 +2,7 @@ package com.codecool.model;
 
 import javax.persistence.*;
 
-@Entity
-@Table(name = "persons")
+@MappedSuperclass
 public abstract class Person {
 
     @Id
@@ -22,6 +21,14 @@ public abstract class Person {
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
