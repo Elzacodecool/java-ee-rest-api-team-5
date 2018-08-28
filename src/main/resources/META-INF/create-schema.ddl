@@ -1,0 +1,89 @@
+create sequence hibernate_sequence start 1 increment 1
+create table Language (id int4 not null, name varchar(255), primary key (id))
+create table Person (DTYPE varchar(31) not null, id int4 not null, email varchar(255), name varchar(255), phoneNumber varchar(255), primary key (id))
+create table Person_Language (Mentor_id int4 not null, languages_id int4 not null)
+alter table if exists Person_Language add constraint FK4pmo3yui3oebd76s3o04is9ee foreign key (languages_id) references Language
+alter table if exists Person_Language add constraint FK1n0vg80p7q8403bk0c2ytj62y foreign key (Mentor_id) references Person
+create sequence hibernate_sequence start 1 increment 1
+create table Language (id int4 not null, name varchar(255), primary key (id))
+create table Person (DTYPE varchar(31) not null, id int4 not null, email varchar(255), name varchar(255), phoneNumber varchar(255), personalMentor_id int4, primary key (id))
+create table Person_Language (Mentor_id int4 not null, languages_id int4 not null)
+alter table if exists Person add constraint FK8vefmsh2u2brsoj6nly9s98cg foreign key (personalMentor_id) references Person
+alter table if exists Person_Language add constraint FK4pmo3yui3oebd76s3o04is9ee foreign key (languages_id) references Language
+alter table if exists Person_Language add constraint FK1n0vg80p7q8403bk0c2ytj62y foreign key (Mentor_id) references Person
+create sequence hibernate_sequence start 1 increment 1
+create table ClassRoom (id int4 not null, className varchar(255), primary key (id))
+create table ClassRoom_Person (ClassRoom_id int4 not null, studentsList_id int4 not null, mentorsList_id int4 not null)
+create table Language (id int4 not null, name varchar(255), primary key (id))
+create table Person (DTYPE varchar(31) not null, id int4 not null, email varchar(255), name varchar(255), phoneNumber varchar(255), personalMentor_id int4, primary key (id))
+create table Person_Language (Mentor_id int4 not null, languages_id int4 not null)
+alter table if exists ClassRoom_Person add constraint UK_2r65il5t22kcvtcyumbqogtkn unique (studentsList_id)
+alter table if exists ClassRoom_Person add constraint FKgb04x4dkfwek5mg529odtg7i7 foreign key (studentsList_id) references Person
+alter table if exists ClassRoom_Person add constraint FK6w46t6fwdlhb0807s5ru1s44v foreign key (ClassRoom_id) references ClassRoom
+alter table if exists ClassRoom_Person add constraint FKmlv4asnp2nqc06148q6iy2xw4 foreign key (mentorsList_id) references Person
+alter table if exists Person add constraint FK8vefmsh2u2brsoj6nly9s98cg foreign key (personalMentor_id) references Person
+alter table if exists Person_Language add constraint FK4pmo3yui3oebd76s3o04is9ee foreign key (languages_id) references Language
+alter table if exists Person_Language add constraint FK1n0vg80p7q8403bk0c2ytj62y foreign key (Mentor_id) references Person
+create sequence hibernate_sequence start 1 increment 1
+create table ClassRoom (id int4 not null, className varchar(255), primary key (id))
+create table ClassRoom_Person (ClassRoom_id int4 not null, studentsList_id int4 not null, mentorsList_id int4 not null)
+create table Language (id int4 not null, name varchar(255), primary key (id))
+create table Person (DTYPE varchar(31) not null, id int4 not null, email varchar(255), name varchar(255), phoneNumber varchar(255), personalMentor_id int4, primary key (id))
+create table Person_Language (Mentor_id int4 not null, languages_id int4 not null)
+alter table if exists ClassRoom_Person add constraint UK_2r65il5t22kcvtcyumbqogtkn unique (studentsList_id)
+alter table if exists ClassRoom_Person add constraint FKgb04x4dkfwek5mg529odtg7i7 foreign key (studentsList_id) references Person
+alter table if exists ClassRoom_Person add constraint FK6w46t6fwdlhb0807s5ru1s44v foreign key (ClassRoom_id) references ClassRoom
+alter table if exists ClassRoom_Person add constraint FKmlv4asnp2nqc06148q6iy2xw4 foreign key (mentorsList_id) references Person
+alter table if exists Person add constraint FK8vefmsh2u2brsoj6nly9s98cg foreign key (personalMentor_id) references Person
+alter table if exists Person_Language add constraint FK4pmo3yui3oebd76s3o04is9ee foreign key (languages_id) references Language
+alter table if exists Person_Language add constraint FK1n0vg80p7q8403bk0c2ytj62y foreign key (Mentor_id) references Person
+create sequence hibernate_sequence start 1 increment 1
+create table ClassRoom (id int4 not null, className varchar(255), primary key (id))
+create table ClassRoom_Person (ClassRoom_id int4 not null, studentsList_id int4 not null, mentorsList_id int4 not null)
+create table Language (id int4 not null, name varchar(255), primary key (id))
+create table Person (DTYPE varchar(31) not null, id int4 not null, email varchar(255), name varchar(255), phoneNumber varchar(255), personalMentor_id int4, primary key (id))
+create table Person_Language (Mentor_id int4 not null, languages_id int4 not null)
+alter table if exists ClassRoom_Person add constraint UK_2r65il5t22kcvtcyumbqogtkn unique (studentsList_id)
+alter table if exists ClassRoom_Person add constraint FKgb04x4dkfwek5mg529odtg7i7 foreign key (studentsList_id) references Person
+alter table if exists ClassRoom_Person add constraint FK6w46t6fwdlhb0807s5ru1s44v foreign key (ClassRoom_id) references ClassRoom
+alter table if exists ClassRoom_Person add constraint FKmlv4asnp2nqc06148q6iy2xw4 foreign key (mentorsList_id) references Person
+alter table if exists Person add constraint FK8vefmsh2u2brsoj6nly9s98cg foreign key (personalMentor_id) references Person
+alter table if exists Person_Language add constraint FK4pmo3yui3oebd76s3o04is9ee foreign key (languages_id) references Language
+alter table if exists Person_Language add constraint FK1n0vg80p7q8403bk0c2ytj62y foreign key (Mentor_id) references Person
+create sequence hibernate_sequence start 1 increment 1
+create table ClassRoom (id int4 not null, className varchar(255), primary key (id))
+create table ClassRoom_Person (ClassRoom_id int4 not null, studentsList_id int4 not null, mentorsList_id int4 not null)
+create table Language (id int4 not null, name varchar(255), primary key (id))
+create table Person (DTYPE varchar(31) not null, id int4 not null, email varchar(255), name varchar(255), phoneNumber varchar(255), personalMentor_id int4, primary key (id))
+create table Person_Language (Mentor_id int4 not null, languages_id int4 not null)
+alter table if exists ClassRoom_Person add constraint UK_2r65il5t22kcvtcyumbqogtkn unique (studentsList_id)
+alter table if exists ClassRoom_Person add constraint FKgb04x4dkfwek5mg529odtg7i7 foreign key (studentsList_id) references Person
+alter table if exists ClassRoom_Person add constraint FK6w46t6fwdlhb0807s5ru1s44v foreign key (ClassRoom_id) references ClassRoom
+alter table if exists ClassRoom_Person add constraint FKmlv4asnp2nqc06148q6iy2xw4 foreign key (mentorsList_id) references Person
+alter table if exists Person add constraint FK8vefmsh2u2brsoj6nly9s98cg foreign key (personalMentor_id) references Person
+alter table if exists Person_Language add constraint FK4pmo3yui3oebd76s3o04is9ee foreign key (languages_id) references Language
+alter table if exists Person_Language add constraint FK1n0vg80p7q8403bk0c2ytj62y foreign key (Mentor_id) references Person
+create table ClassRoom (id  serial not null, className varchar(255), primary key (id))
+create table ClassRoom_Person (ClassRoom_id int4 not null, studentsList_id int4 not null, mentorsList_id int4 not null)
+create table Language (id  serial not null, name varchar(255), primary key (id))
+create table Person (DTYPE varchar(31) not null, id  serial not null, email varchar(255), name varchar(255), phoneNumber varchar(255), personalMentor_id int4, primary key (id))
+create table Person_Language (Mentor_id int4 not null, languages_id int4 not null)
+alter table if exists ClassRoom_Person add constraint UK_2r65il5t22kcvtcyumbqogtkn unique (studentsList_id)
+alter table if exists ClassRoom_Person add constraint FKgb04x4dkfwek5mg529odtg7i7 foreign key (studentsList_id) references Person
+alter table if exists ClassRoom_Person add constraint FK6w46t6fwdlhb0807s5ru1s44v foreign key (ClassRoom_id) references ClassRoom
+alter table if exists ClassRoom_Person add constraint FKmlv4asnp2nqc06148q6iy2xw4 foreign key (mentorsList_id) references Person
+alter table if exists Person add constraint FK8vefmsh2u2brsoj6nly9s98cg foreign key (personalMentor_id) references Person
+alter table if exists Person_Language add constraint FK4pmo3yui3oebd76s3o04is9ee foreign key (languages_id) references Language
+alter table if exists Person_Language add constraint FK1n0vg80p7q8403bk0c2ytj62y foreign key (Mentor_id) references Person
+create table ClassRoom (id  serial not null, className varchar(255), primary key (id))
+create table ClassRoom_Person (ClassRoom_id int4 not null, studentsList_id int4 not null, mentorsList_id int4 not null)
+create table Language (id  serial not null, name varchar(255), primary key (id))
+create table Person (DTYPE varchar(31) not null, id  serial not null, email varchar(255), name varchar(255), phoneNumber varchar(255), personalMentor_id int4, primary key (id))
+create table Person_Language (Mentor_id int4 not null, languages_id int4 not null)
+alter table if exists ClassRoom_Person add constraint UK_2r65il5t22kcvtcyumbqogtkn unique (studentsList_id)
+alter table if exists ClassRoom_Person add constraint FKgb04x4dkfwek5mg529odtg7i7 foreign key (studentsList_id) references Person
+alter table if exists ClassRoom_Person add constraint FK6w46t6fwdlhb0807s5ru1s44v foreign key (ClassRoom_id) references ClassRoom
+alter table if exists ClassRoom_Person add constraint FKmlv4asnp2nqc06148q6iy2xw4 foreign key (mentorsList_id) references Person
+alter table if exists Person add constraint FK8vefmsh2u2brsoj6nly9s98cg foreign key (personalMentor_id) references Person
+alter table if exists Person_Language add constraint FK4pmo3yui3oebd76s3o04is9ee foreign key (languages_id) references Language
+alter table if exists Person_Language add constraint FK1n0vg80p7q8403bk0c2ytj62y foreign key (Mentor_id) references Person
