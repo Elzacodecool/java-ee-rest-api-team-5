@@ -1,7 +1,11 @@
 package com.codecool.model;
 
-public class Student extends Person {
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 
+@Entity
+public class Student extends Person {
+    @ManyToOne
     private Mentor personalMentor;
 
     public Student() {
