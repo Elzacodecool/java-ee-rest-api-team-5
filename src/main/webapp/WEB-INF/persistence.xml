@@ -6,8 +6,10 @@
 
     <persistence-unit name="codecoolPU" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <class>com.codecool.jpaexample.model.Student</class>
-        <class>com.codecool.jpaexample.model.Address</class>
+        <class>com.codecool.model.Student</class>
+        <class>com.codecool.model.Mentor</class>
+        <class>com.codecool.model.Person</class>
+        <class>com.codecool.model.ClassRoom</class>
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL94Dialect"/>
             <property name="hibernate.hbm2dll.auto" value="create-drop"/>
