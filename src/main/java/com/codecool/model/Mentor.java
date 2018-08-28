@@ -34,4 +34,12 @@ public class Mentor {
     public List<ClassRoom> getClassRoomList() {
         return null;
     }
+
+    public PersonDetails getDetails() {
+        return details;
+    }
+
+    public void setDetails(PersonDetails personDetails) {
+        details = personDetails;
+    }
 }

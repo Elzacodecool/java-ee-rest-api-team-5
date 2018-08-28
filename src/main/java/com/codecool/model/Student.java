@@ -30,4 +30,12 @@ public class Student {
     public void setPersonalMentor(Mentor personalMentor) {
         this.personalMentor = personalMentor;
     }
+
+    public PersonDetails getDetails() {
+        return details;
+    }
+
+    public void setDetails(PersonDetails personDetails) {
+        details = personDetails;
+    }
 }
