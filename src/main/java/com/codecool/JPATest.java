@@ -13,8 +13,9 @@ import java.util.List;
 
 public class JPATest {
     public static void populateDb(EntityManager em) {
-
-        Mentor mentor = new Mentor("Marcin Izworski", "m.izworski@gmail.com","123456789");
+        List<String> languageList = new ArrayList<>();
+        languageList.add("Java");
+        Mentor mentor = new Mentor("Marcin Izworski", "m.izworski@gmail.com","123456789",languageList);
         Student student = new Student("Elzbieta Krzych", "elzbieta.krzych@gmail.com","123456789", mentor);
 
         List<Student> studentList = new ArrayList<>();
