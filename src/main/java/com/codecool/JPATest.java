@@ -21,13 +21,9 @@ public class JPATest {
         PersonDetails studentDetails = new PersonDetails("Elzbieta Krzych", "elzbieta.krzych@gmail.com","123456789");
         Student student = new Student(studentDetails, mentor);
 
-        List<Student> studentList = new ArrayList<>();
-        studentList.add(student);
-
-        List<Mentor> mentorList = new ArrayList<>();
-        mentorList.add(mentor);
-
         ClassRoom classA = new ClassRoom("webRoom");
+        classA.addStudent(student);
+        classA.addMentor(mentor);
 
         EntityTransaction transaction = em.getTransaction();
 
