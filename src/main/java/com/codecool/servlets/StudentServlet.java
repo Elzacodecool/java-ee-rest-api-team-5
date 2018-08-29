@@ -42,7 +42,7 @@ public class StudentServlet extends HttpServlet {
 
         if (pathInfo != null) {
             int studentId = parseStudentId(pathInfo);
-
+            studentDAO.open();
             String jsonStudent = getJSONStudent(studentDAO.getStudent(studentId)).toString();
 
             response.setHeader("Content-Type", "application/json");
@@ -119,6 +119,7 @@ public class StudentServlet extends HttpServlet {
     }
 
     private String getJSONStudents() {
+        studentDAO.open();
         List<Student> studentList = studentDAO.getAllStudents();
         studentDAO.close();
 
