@@ -16,7 +16,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 @WebServlet(name="student",
         urlPatterns = {"/student/*"})
@@ -72,8 +75,32 @@ public class StudentServlet extends HttpServlet {
             studentDAO.addStudent(student);
             response.setHeader("Content-Type", "application/json");
             response.getWriter().write(getJSONStudent(student).toString());
-        }
 
+            studentDAO.close();
+        }
+    }
+
+    @Override
+    public void doPut(HttpServletRequest request, HttpServletResponse response) {
+        String pathInfo = request.getPathInfo();
+
+        if (pathInfo != null) {
+            studentDAO.open();
+            Map<String, String> updatedValues = getUpdatedValues(request);
+            int studentId = parseStudentId(pathInfo);
+            Student student = studentDAO.getStudent(studentId);
+            studentDAO.updateStudent(student, updatedValues);
+        }
+    }
+
+    private Map<String, String> getUpdatedValues(HttpServletRequest request) {
+        Map<String, String> updatedValues = new HashMap<>();
+        Enumeration<String> paramNames = request.getParameterNames();
+        while (paramNames.hasMoreElements()) {
+            String paramName = paramNames.nextElement();
+            updatedValues.put(paramName, request.getParameter(paramName));
+        }
+        return updatedValues;
     }
 
     private int parseStudentId(String pathInfo) {
