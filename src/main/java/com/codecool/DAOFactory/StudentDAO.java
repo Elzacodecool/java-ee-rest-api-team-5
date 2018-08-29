@@ -1,5 +1,6 @@
-package com.codecool.model;
+package com.codecool.DAOFactory;
 
+import com.codecool.model.*;
 import org.hibernate.Session;
 
 import javax.persistence.*;
