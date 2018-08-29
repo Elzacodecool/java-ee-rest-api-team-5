@@ -44,6 +44,17 @@ public class Student {
 
     public void setClass(ClassRoom classRoom) {
         this.classRoom = classRoom;
+    }
 
+    public ClassRoom getClassRoom() {
+        return classRoom;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
