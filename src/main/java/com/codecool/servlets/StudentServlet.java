@@ -14,18 +14,25 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @WebServlet(name="student",
         urlPatterns = {"/student/*"})
 public class StudentServlet extends HttpServlet {
 
+    private static StudentDAO studentDAO;
+
+    public StudentServlet(StudentDAO dao) {
+        studentDAO = dao;
+    }
+
+    public StudentServlet() {
+
+    }
+
+    @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String uri = request.getRequestURI();
         String pathInfo = request.getPathInfo();
-        System.out.println(uri + " <-> " + pathInfo);
-        StudentDAO studentDAO = new StudentDAO();
         populateDb(studentDAO);
 
         if (pathInfo != null) {
@@ -40,9 +47,28 @@ public class StudentServlet extends HttpServlet {
         } else {
             response.setHeader("Content-Type", "application/json");
 
-            response.getWriter().write(getJSONStudents(studentDAO));
+            response.getWriter().write(getJSONStudents());
 
         }
+    }
+
+    @Override
+    public void doPost(HttpServletRequest request, HttpServletResponse response) {
+        String pathInfo = request.getPathInfo();
+        populateDb(studentDAO);
+        if (pathInfo == null) {
+            String name = request.getParameter("name");
+            String email = request.getParameter("email");
+            String phoneNumber = request.getParameter("phoneNumber");
+            int personalMentorId = Integer.parseInt(request.getParameter("personalMentor"));
+
+            Mentor mentor = studentDAO.getMetor(personalMentorId);
+
+            PersonDetails userDetails = new PersonDetails(name, email, phoneNumber);
+            Student student = new Student(userDetails, mentor);
+            studentDAO.addStudent(student);
+        }
+
     }
 
     private int parseStudentId(String pathInfo) {
@@ -61,7 +87,7 @@ public class StudentServlet extends HttpServlet {
         return clearPathInfo;
     }
 
-    private String getJSONStudents(StudentDAO studentDAO) {
+    private String getJSONStudents() {
         List<Student> studentList = studentDAO.getAllStudents();
         studentDAO.close();
 
