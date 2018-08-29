@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @WebServlet(name="student",
@@ -26,7 +27,15 @@ public class StudentServlet extends HttpServlet {
         System.out.println(uri + " <-> " + pathInfo);
         StudentDAO studentDAO = new StudentDAO();
         populateDb(studentDAO);
+
         if (pathInfo != null) {
+            int studentId = parseStudentId(pathInfo);
+
+            String jsonStudent = getJSONStudent(studentDAO.getStudent(studentId)).toString();
+
+            response.setHeader("Content-Type", "application/json");
+
+            response.getWriter().write(jsonStudent);
 
         } else {
             response.setHeader("Content-Type", "application/json");
@@ -36,6 +45,22 @@ public class StudentServlet extends HttpServlet {
         }
     }
 
+    private int parseStudentId(String pathInfo) {
+        String[] splittedPathInfo = pathInfo.split("/");
+        List<String> clearSplittedPathInfo = clearSplitedPathInfo(splittedPathInfo);
+        return Integer.parseInt(clearSplittedPathInfo.get(0));
+    }
+
+    private List<String> clearSplitedPathInfo(String[] pathInfo) {
+        List<String> clearPathInfo = new ArrayList<>();
+        for (String pathElement: pathInfo) {
+            if (!pathElement.equals("")) {
+                clearPathInfo.add(pathElement);
+            }
+        }
+        return clearPathInfo;
+    }
+
     private String getJSONStudents(StudentDAO studentDAO) {
         List<Student> studentList = studentDAO.getAllStudents();
         studentDAO.close();
@@ -43,19 +68,23 @@ public class StudentServlet extends HttpServlet {
         JSONArray array = new JSONArray();
         System.out.println(studentList.size());
         for (Student student: studentList) {
-            JSONObject json = new JSONObject();
-            PersonDetails personDetails = student.getDetails();
-            ClassRoom classRoom = student.getClassRoom();
-
-            json.put("id", student.getId());
-            json.put("name", personDetails.getName());
-            json.put("email", personDetails.getEmail());
-            json.put("phoneNumber", personDetails.getPhoneNumber());
-            json.put("personalMentor", student.getPersonalMentor().getDetails().getName());
-            json.put("classroom", classRoom != null ? classRoom.getClassName(): "none");
-            array.put(json);
+            array.put(getJSONStudent(student));
         }
         return array.toString();
+    }
+
+    private JSONObject getJSONStudent(Student student) {
+        JSONObject json = new JSONObject();
+        PersonDetails personDetails = student.getDetails();
+        ClassRoom classRoom = student.getClassRoom();
+
+        json.put("id", student.getId());
+        json.put("name", personDetails.getName());
+        json.put("email", personDetails.getEmail());
+        json.put("phoneNumber", personDetails.getPhoneNumber());
+        json.put("personalMentor", student.getPersonalMentor().getDetails().getName());
+        json.put("classroom", classRoom != null ? classRoom.getClassName(): "none");
+        return json;
     }
 
     private void populateDb(StudentDAO studentDAO) {
