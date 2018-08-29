@@ -12,10 +12,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MentorDAO {
+    private EntityManagerFactory entityManagerFactory;
     private EntityManager entityManager;
 
     public MentorDAO(){
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("codecoolPU");
+        this.entityManager = entityManagerFactory.createEntityManager();
+    }
+
+    public MentorDAO(EntityManagerFactory entityManagerFactory) {
+        this.entityManagerFactory = entityManagerFactory;
         this.entityManager = entityManagerFactory.createEntityManager();
     }
 
