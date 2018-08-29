@@ -1,5 +1,6 @@
 package com.codecool.servlets;
 
+import com.codecool.DAOFactory.MentorDAO;
 import com.codecool.DAOFactory.StudentDAO;
 import com.codecool.model.*;
 import org.json.JSONArray;
@@ -34,7 +35,7 @@ public class StudentServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String pathInfo = request.getPathInfo();
-        populateDb(studentDAO);
+//        populateDb(studentDAO);
 
         if (pathInfo != null) {
             int studentId = parseStudentId(pathInfo);
@@ -54,20 +55,23 @@ public class StudentServlet extends HttpServlet {
     }
 
     @Override
-    public void doPost(HttpServletRequest request, HttpServletResponse response) {
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String pathInfo = request.getPathInfo();
-        populateDb(studentDAO);
+//        populateDb(studentDAO);
         if (pathInfo == null) {
+            studentDAO.open();
             String name = request.getParameter("name");
             String email = request.getParameter("email");
             String phoneNumber = request.getParameter("phoneNumber");
             int personalMentorId = Integer.parseInt(request.getParameter("personalMentor"));
 
-            Mentor mentor = studentDAO.getMetor(personalMentorId);
+            Mentor mentor = new MentorDAO(studentDAO.getEntityManagerFactory()).getMentor(personalMentorId);
 
             PersonDetails userDetails = new PersonDetails(name, email, phoneNumber);
             Student student = new Student(userDetails, mentor);
             studentDAO.addStudent(student);
+            response.setHeader("Content-Type", "application/json");
+            response.getWriter().write(getJSONStudent(student).toString());
         }
 
     }
