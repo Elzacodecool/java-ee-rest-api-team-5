@@ -12,9 +12,13 @@ public class StudentDAO {
     private EntityManagerFactory entityManagerFactory;
     private EntityManager entityManager;
 
-    public StudentDAO() {
-        entityManagerFactory = Persistence.createEntityManagerFactory("codecoolPU");
+    public StudentDAO(EntityManagerFactory entityManagerFactory) {
+        this.entityManagerFactory = entityManagerFactory;
         entityManager = entityManagerFactory.createEntityManager();
+    }
+
+    public EntityManagerFactory getEntityManagerFactory() {
+        return entityManagerFactory;
     }
 
     public void addStudent(Student student) {
@@ -42,43 +46,5 @@ public class StudentDAO {
 
     public void open() {
         entityManager = entityManagerFactory.createEntityManager();
-    }
-
-
-    public static void main(String[] args) {
-        StudentDAO studentDAO = new StudentDAO();
-        Language language = new Language("Java");
-
-        List<Language> languages = new ArrayList<>();
-        languages.add(language);
-
-        PersonDetails personDetails = new PersonDetails("Imie Nazwisko", "Email", "Numer tel");
-
-        Mentor mentor = new Mentor(personDetails, languages);
-        PersonDetails studentDetails = new PersonDetails("Student Name", "Student email", "phone number");
-        Student student = new Student(studentDetails, mentor);
-        ClassRoom classRoom = new ClassRoom("WEB");
-        Student student2 = new Student(new PersonDetails("Second student", "email", "number"), mentor);
-
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("codecoolPU");
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
-
-        transaction.begin();
-        entityManager.persist(language);
-        entityManager.persist(personDetails);
-        entityManager.persist(mentor);
-        entityManager.persist(classRoom);
-        transaction.commit();
-
-        entityManager.close();
-        entityManagerFactory.close();
-
-        studentDAO.addStudent(student2);
-        studentDAO.addStudent(student);
-
-
-        List<Student> students = studentDAO.getAllStudents();
-        studentDAO.close();
     }
 }
