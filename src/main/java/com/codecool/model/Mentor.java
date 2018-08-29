@@ -40,4 +40,12 @@ public class Mentor {
     public void addClass(ClassRoom classRoom) {
         this.classRoom.add(classRoom);
     }
+
+    public PersonDetails getDetails() {
+        return details;
+    }
+
+    public void setDetails(PersonDetails personDetails) {
+        details = personDetails;
+    }
 }
