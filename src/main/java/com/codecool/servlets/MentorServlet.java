@@ -27,7 +27,13 @@ public class MentorServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         out.print(employeeJsonString);
         out.flush();
+    }
 
+    @Override
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String pathInfo = request.getPathInfo();
+        int id = Integer.valueOf(pathInfo.split("/")[1]);
+        mentorDAO.deleteMentor(id);
     }
 
     private String getJsonStringMentors(String pathInfo) {

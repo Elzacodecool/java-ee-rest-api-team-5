@@ -43,7 +43,10 @@ public class MentorDAO {
     }
 
     public void deleteMentor(Mentor mentor) {
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
         entityManager.remove(mentor);
+        transaction.commit();
     }
 
     public void deleteMentor(int id) {
