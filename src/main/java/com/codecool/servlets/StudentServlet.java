@@ -27,11 +27,7 @@ public class StudentServlet extends HttpServlet {
         StudentDAO studentDAO = new StudentDAO();
         populateDb(studentDAO);
         if (pathInfo != null) {
-            try {
-                response.getWriter().write(uri);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+
         } else {
             response.setHeader("Content-Type", "application/json");
 
@@ -49,12 +45,13 @@ public class StudentServlet extends HttpServlet {
         for (Student student: studentList) {
             JSONObject json = new JSONObject();
             PersonDetails personDetails = student.getDetails();
+            ClassRoom classRoom = student.getClassRoom();
+
             json.put("id", student.getId());
             json.put("name", personDetails.getName());
             json.put("email", personDetails.getEmail());
             json.put("phoneNumber", personDetails.getPhoneNumber());
             json.put("personalMentor", student.getPersonalMentor().getDetails().getName());
-            ClassRoom classRoom = student.getClassRoom();
             json.put("classroom", classRoom != null ? classRoom.getClassName(): "none");
             array.put(json);
         }
