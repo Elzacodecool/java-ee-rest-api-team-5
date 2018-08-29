@@ -1,5 +1,6 @@
 package com.codecool.servlets;
 
+import com.codecool.DAOFactory.StudentDAO;
 import com.codecool.model.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
