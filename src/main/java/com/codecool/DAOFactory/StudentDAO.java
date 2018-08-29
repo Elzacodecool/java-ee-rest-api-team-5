@@ -4,8 +4,8 @@ import com.codecool.model.*;
 import org.hibernate.Session;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class StudentDAO {
 
@@ -38,6 +38,31 @@ public class StudentDAO {
         List studentsList = session.createCriteria(Student.class).list();
         return (List<Student>) studentsList;
 
+    }
+
+    public void updateStudent(Student student, Map<String, String> updatedValues) {
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        entityManager.merge(changeStudentData(student, updatedValues));
+        transaction.commit();
+    }
+
+    private Student changeStudentData(Student student, Map<String, String> updatedValues) {
+        for (String key: updatedValues.keySet()) {
+            String updatedValue = updatedValues.get(key);
+            if (key.equals("name")) {
+                student.getDetails().setName(updatedValue);
+            } else if (key.equals("email")) {
+                student.getDetails().setEmail(updatedValue);
+            } else if (key.equals("phoneNumber")) {
+                student.getDetails().setPhoneNumber(updatedValue);
+            } else if (key.equals("personalMentor")) {
+                int mentorId = Integer.parseInt(updatedValue);
+                Mentor mentor = new MentorDAO(entityManagerFactory).getMentor(mentorId);
+                student.setPersonalMentor(mentor);
+            }
+        }
+        return student;
     }
 
     public void close() {
