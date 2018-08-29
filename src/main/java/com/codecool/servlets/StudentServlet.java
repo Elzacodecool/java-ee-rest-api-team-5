@@ -86,10 +86,9 @@ public class StudentServlet extends HttpServlet {
 
         if (pathInfo != null) {
             studentDAO.open();
-            Map<String, String> updatedValues = getUpdatedValues(request);
             int studentId = parseStudentId(pathInfo);
             Student student = studentDAO.getStudent(studentId);
-            studentDAO.updateStudent(student, updatedValues);
+            studentDAO.updateStudent(student, getUpdatedValues(request));
         }
     }
 
