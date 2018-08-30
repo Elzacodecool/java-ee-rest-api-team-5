@@ -47,6 +47,14 @@ public class ClassRoom {
         return studentsList;
     }
 
+    public void setStudentsList(List<Student> studentsList) {
+        this.studentsList = studentsList;
+    }
+
+    public void setMentorsList(List<Mentor> mentorsList) {
+        this.mentorsList = mentorsList;
+    }
+
     public List<Mentor> getMentorsList() {
         return mentorsList;
     }
@@ -59,5 +67,9 @@ public class ClassRoom {
     public void addMentor(Mentor mentor) {
         this.mentorsList.add(mentor);
         mentor.addClass(this);
+    }
+
+    public void deleteMentor(Mentor mentor) {
+        this.mentorsList.remove(mentor);
     }
 }
