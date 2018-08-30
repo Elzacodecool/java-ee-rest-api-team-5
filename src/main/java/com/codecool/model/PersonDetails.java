@@ -1,5 +1,7 @@
 package com.codecool.model;
 
+import com.google.gson.annotations.Expose;
+
 import javax.persistence.*;
 
 @Entity
@@ -7,12 +9,16 @@ public class PersonDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Expose
     private int id;
 
+    @Expose
     private String name;
 
+    @Expose
     private String email;
 
+    @Expose
     private String phoneNumber;
 
     public PersonDetails() {}

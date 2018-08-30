@@ -4,7 +4,7 @@ import com.codecool.DAOFactory.MentorDAO;
 import com.codecool.model.Language;
 import com.codecool.model.Mentor;
 import com.codecool.model.PersonDetails;
-import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,8 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 @WebServlet(name="mentors",
         urlPatterns = {"/mentors/*"})
@@ -35,6 +33,7 @@ public class MentorServlet extends HttpServlet {
         String pathInfo = request.getPathInfo();
         PrintWriter out = response.getWriter();
         String employeeJsonString = getJsonStringMentors(pathInfo);
+        System.out.println(employeeJsonString);
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
@@ -62,11 +61,11 @@ public class MentorServlet extends HttpServlet {
 
     private String getJsonStringMentors(String pathInfo) {
         if (pathInfo == null) {
-            return new Gson().toJson(mentorDAO.getAllMentors());
+            return new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create().toJson(mentorDAO.getAllMentors());
         } else {
             int id = Integer.valueOf(pathInfo.split("/")[1]);
             Mentor mentor = mentorDAO.getMentor(id);
-            return new Gson().toJson(mentor);
+            return new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create().toJson(mentor);
         }
     }
 }

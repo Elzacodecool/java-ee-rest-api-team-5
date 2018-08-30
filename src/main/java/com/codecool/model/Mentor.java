@@ -2,21 +2,22 @@ package com.codecool.model;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "mentors")
 public class Mentor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Expose
     private int id;
 
     @OneToOne(orphanRemoval = true)
+    @Expose
     private PersonDetails details;
 
     @ManyToMany
+    @Expose
     private List<Language> languages;
 
     @OneToMany(mappedBy = "mentorsList")

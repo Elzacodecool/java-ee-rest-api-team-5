@@ -1,5 +1,7 @@
 package com.codecool.model;
 
+import com.google.gson.annotations.Expose;
+
 import javax.persistence.*;
 
 @Entity
@@ -7,12 +9,15 @@ import javax.persistence.*;
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Expose
     private int id;
 
     @OneToOne
+    @Expose
     private PersonDetails details;
 
     @ManyToOne
+    @Expose
     private Mentor personalMentor;
 
     @OneToOne
