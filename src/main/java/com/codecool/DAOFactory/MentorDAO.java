@@ -15,11 +15,6 @@ public class MentorDAO {
         this.entityManager = entityManagerFactory.createEntityManager();
     }
 
-    public MentorDAO(EntityManagerFactory entityManagerFactory) {
-        this.entityManagerFactory = entityManagerFactory;
-        this.entityManager = entityManagerFactory.createEntityManager();
-    }
-
     public Mentor getMentor(int id) {
         return entityManager.find(Mentor.class, id );
     }
@@ -28,6 +23,7 @@ public class MentorDAO {
         return entityManager.createQuery( "SELECT m FROM Mentor m" )
                 .getResultList();
     }
+
     public void addMentor(Mentor mentor) {
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
@@ -52,17 +48,5 @@ public class MentorDAO {
 
     public void deleteMentor(int id) {
         deleteMentor(getMentor(id));
-    }
-    public static void main(String[] args) {
-        MentorDAO mentorDAO = new MentorDAO();
-
-        PersonDetails personDetails = new PersonDetails("eliza", "email", "phone");
-        List<Language> languages = new ArrayList<>();
-        languages.add(new Language("java"));
-
-        Mentor mentor = new Mentor(personDetails, languages);
-        mentorDAO.deleteMentor(4);
-        System.out.println("after delete");
-
     }
 }
