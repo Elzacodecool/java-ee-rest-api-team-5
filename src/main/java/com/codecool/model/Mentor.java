@@ -13,7 +13,7 @@ public class Mentor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToOne
+    @OneToOne(orphanRemoval = true)
     private PersonDetails details;
 
     @ManyToMany
@@ -21,6 +21,9 @@ public class Mentor {
 
     @OneToMany(mappedBy = "mentorsList")
     private List<ClassRoom> classRoom = new ArrayList<>();
+
+    @OneToMany(mappedBy = "personalMentor")
+    private List<Student> students;
 
     public Mentor() {
     }
@@ -47,5 +50,11 @@ public class Mentor {
 
     public void setDetails(PersonDetails personDetails) {
         details = personDetails;
+    }
+
+    @PreRemove
+    public void nullificarStudents() {
+        students.forEach(student -> student.setPersonalMentor(null));
+        students = null;
     }
 }
