@@ -17,7 +17,7 @@ public class App implements ServletContextListener {
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("codecoolPU");
         ServletContext servletContext = servletContextEvent.getServletContext();
-        servletContext.addServlet("student", new StudentServlet(new StudentDAO(factory)));
+        servletContext.addServlet("students", new StudentServlet(new StudentDAO(factory)));
     }
 
     @Override
