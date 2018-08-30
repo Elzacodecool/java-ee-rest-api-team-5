@@ -233,3 +233,33 @@ drop table if exists mentors cascade
 drop table if exists mentors_Language cascade
 drop table if exists PersonDetails cascade
 drop table if exists students cascade
+alter table if exists classrooms_mentors drop constraint if exists FKc39jr75xctseyute9ixft3ycp
+alter table if exists classrooms_mentors drop constraint if exists FKju8k3w2keiap31gfjp5uigttp
+alter table if exists mentors drop constraint if exists FKf865ocg369h7uqw744wiw0ef8
+alter table if exists mentors_Language drop constraint if exists FKa0hvr6hjldkw6aq960ds4445
+alter table if exists mentors_Language drop constraint if exists FKg90j6q8xjjjelvgtw75r0ufdc
+alter table if exists students drop constraint if exists FKhtgh1unrqbywmlyrb6l1o3g5c
+alter table if exists students drop constraint if exists FKhnar0nl4s1g8sh17r32nmw2au
+alter table if exists students drop constraint if exists FK5wwavpby5g4u3tm21rfn8vqck
+drop table if exists classrooms cascade
+drop table if exists classrooms_mentors cascade
+drop table if exists Language cascade
+drop table if exists mentors cascade
+drop table if exists mentors_Language cascade
+drop table if exists PersonDetails cascade
+drop table if exists students cascade
+alter table if exists classrooms_mentors drop constraint if exists FKc39jr75xctseyute9ixft3ycp
+alter table if exists classrooms_mentors drop constraint if exists FKju8k3w2keiap31gfjp5uigttp
+alter table if exists mentors drop constraint if exists FKf865ocg369h7uqw744wiw0ef8
+alter table if exists mentors_Language drop constraint if exists FKa0hvr6hjldkw6aq960ds4445
+alter table if exists mentors_Language drop constraint if exists FKg90j6q8xjjjelvgtw75r0ufdc
+alter table if exists students drop constraint if exists FKhtgh1unrqbywmlyrb6l1o3g5c
+alter table if exists students drop constraint if exists FKhnar0nl4s1g8sh17r32nmw2au
+alter table if exists students drop constraint if exists FK5wwavpby5g4u3tm21rfn8vqck
+drop table if exists classrooms cascade
+drop table if exists classrooms_mentors cascade
+drop table if exists Language cascade
+drop table if exists mentors cascade
+drop table if exists mentors_Language cascade
+drop table if exists PersonDetails cascade
+drop table if exists students cascade

@@ -41,10 +41,7 @@ public class StudentDAO {
         Session session = (Session) entityManager.getDelegate();
         List studentsList = session.createCriteria(Student.class).list();
         return (List<Student>) studentsList;
-
     }
-
-
     public void updateStudent(Student student, Map<String, String> updatedValues) {
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();

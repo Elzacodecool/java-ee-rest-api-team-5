@@ -155,57 +155,9 @@ public class StudentServlet extends HttpServlet {
         List<Student> studentList = studentDAO.getAllStudents();
         studentDAO.close();
         return new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create().toJson(studentList);
-        /*JSONArray array = new JSONArray();
-
-        for (Student student: studentList) {
-            array.put(getJSONStudent(student));
-        }
-        return array.toString();*/
     }
 
     private String getJSONStudent(Student student) {
-        /*JSONObject json = new JSONObject();
-        PersonDetails personDetails = student.getDetails();
-        ClassRoom classRoom = student.getClassRoom();
-
-        json.put("id", student.getId());
-        json.put("name", personDetails.getName());
-        json.put("email", personDetails.getEmail());
-        json.put("phoneNumber", personDetails.getPhoneNumber());
-        json.put("personalMentor", student.getPersonalMentor().getDetails().getName());
-        json.put("classroom", classRoom != null ? classRoom.getClassName(): "none");*/
         return new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create().toJson(student);
-    }
-
-    private void populateDb(StudentDAO studentDAO) {
-        Language language = new Language("Java");
-
-        List<Language> languages = new ArrayList<>();
-        languages.add(language);
-
-        PersonDetails personDetails = new PersonDetails("Imie Nazwisko", "Email", "Numer tel");
-
-        Mentor mentor = new Mentor(personDetails, languages);
-        PersonDetails studentDetails = new PersonDetails("Student Name", "Student email", "phone number");
-        Student student = new Student(studentDetails, mentor);
-        ClassRoom classRoom = new ClassRoom("WEB");
-        Student student2 = new Student(new PersonDetails("Second student", "email", "number"), mentor);
-
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("codecoolPU");
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
-
-        transaction.begin();
-        entityManager.persist(language);
-        entityManager.persist(personDetails);
-        entityManager.persist(mentor);
-        entityManager.persist(classRoom);
-        transaction.commit();
-
-        entityManager.close();
-        entityManagerFactory.close();
-
-        studentDAO.addStudent(student2);
-        studentDAO.addStudent(student);
     }
 }

@@ -19,7 +19,7 @@ public class Mentor {
     @Expose
     private PersonDetails details;
 
-    @ManyToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @Expose
     private List<Language> languages;
 
