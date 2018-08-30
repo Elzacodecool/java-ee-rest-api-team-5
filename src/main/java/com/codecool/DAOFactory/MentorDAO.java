@@ -19,6 +19,7 @@ public class MentorDAO {
         return entityManager.find(Mentor.class, id );
     }
 
+    @SuppressWarnings("unchecked")
     public List<Mentor> getAllMentors() {
         return entityManager.createQuery( "SELECT m FROM Mentor m" )
                 .getResultList();
