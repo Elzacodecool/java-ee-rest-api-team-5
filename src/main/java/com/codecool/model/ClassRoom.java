@@ -20,7 +20,7 @@ public class ClassRoom {
 
     @ManyToMany(mappedBy = "classRoom")
     @ElementCollection
-    private transient List<Mentor> mentorsList = new ArrayList<>();
+    private List<Mentor> mentorsList = new ArrayList<>();
 
     public ClassRoom() {}
 
