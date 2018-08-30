@@ -2,21 +2,16 @@ package com.codecool.DAOFactory;
 
 import com.codecool.model.Language;
 import com.codecool.model.Mentor;
-import com.codecool.model.PersonDetails;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
-import java.util.ArrayList;
 import java.util.List;
 
 public class MentorDAO {
-    private EntityManagerFactory entityManagerFactory;
     private EntityManager entityManager;
 
-    public MentorDAO(){
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("codecoolPU");
+    public MentorDAO(EntityManagerFactory entityManagerFactory){
         this.entityManager = entityManagerFactory.createEntityManager();
     }
 

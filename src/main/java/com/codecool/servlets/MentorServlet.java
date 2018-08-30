@@ -20,7 +20,15 @@ import java.util.Map;
 @WebServlet(name="mentors",
         urlPatterns = {"/mentors/*"})
 public class MentorServlet extends HttpServlet {
-    private MentorDAO mentorDAO = new MentorDAO();
+    private static MentorDAO mentorDAO;
+
+    public MentorServlet(MentorDAO mentorDAO) {
+        MentorServlet.mentorDAO = mentorDAO;
+    }
+
+    public MentorServlet() {
+
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
