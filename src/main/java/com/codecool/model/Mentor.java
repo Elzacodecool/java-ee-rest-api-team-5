@@ -17,13 +17,13 @@ public class Mentor {
     private PersonDetails details;
 
     @ManyToMany
-    private List<Language> languages;
+    private transient List<Language> languages;
 
     @OneToMany(mappedBy = "mentorsList")
-    private List<ClassRoom> classRoom = new ArrayList<>();
+    private transient List<ClassRoom> classRoom = new ArrayList<>();
 
     @OneToMany(mappedBy = "personalMentor")
-    private List<Student> students;
+    private transient List<Student> students;
 
     public Mentor() {
     }
