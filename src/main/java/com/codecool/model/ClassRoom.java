@@ -1,7 +1,5 @@
 package com.codecool.model;
 
-import com.google.gson.annotations.Expose;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 
@@ -10,24 +8,19 @@ import java.util.List;
 
 @Entity
 public class ClassRoom {
+    @OneToMany(mappedBy = "classRoom")
+    @ElementCollection
+    transient List<Student> studentsList = new ArrayList<>();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Expose
     private int id;
 
-    @Expose
     private String className;
-
-    @OneToMany(mappedBy = "classRoom")
-    @ElementCollection
-    @Expose
-    private  List<Student> studentsList = new ArrayList<>();
 
     @ManyToMany(mappedBy = "classRoom")
     @ElementCollection
-    @Expose
-    private List<Mentor> mentorsList = new ArrayList<>();
+    private transient List<Mentor> mentorsList = new ArrayList<>();
 
     public ClassRoom() {}
 
@@ -45,14 +38,6 @@ public class ClassRoom {
 
     public List<Student> getStudentsList() {
         return studentsList;
-    }
-
-    public void setStudentsList(List<Student> studentsList) {
-        this.studentsList = studentsList;
-    }
-
-    public void setMentorsList(List<Mentor> mentorsList) {
-        this.mentorsList = mentorsList;
     }
 
     public List<Mentor> getMentorsList() {

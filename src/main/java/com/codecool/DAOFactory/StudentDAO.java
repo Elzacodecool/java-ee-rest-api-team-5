@@ -77,6 +77,10 @@ public class StudentDAO {
                 int mentorId = Integer.parseInt(updatedValue);
                 Mentor mentor = new MentorDAO(entityManagerFactory).getMentor(mentorId);
                 student.setPersonalMentor(mentor);
+            } else if (key.equals("classroom")) {
+                int classRoomId = Integer.parseInt(updatedValue);
+                ClassRoom classRoom = new ClassRoomDAO(entityManagerFactory).getClassRoom(classRoomId);
+                student.setClass(classRoom);
             }
         }
         return student;
