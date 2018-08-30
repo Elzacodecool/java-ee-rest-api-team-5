@@ -111,14 +111,14 @@ public class StudentServlet extends HttpServlet {
         String email = request.getParameter("email");
         String phoneNumber = request.getParameter("phoneNumber");
         int personalMentorId = Integer.parseInt(request.getParameter("personalMentor"));
-        int classroomId = Integer.parseInt(request.getParameter("classroom"));
+//        int classroomId = Integer.parseInt(request.getParameter("classroom"));
         EntityManagerFactory factory = studentDAO.getEntityManagerFactory();
 
         Mentor mentor = new MentorDAO(factory).getMentor(personalMentorId);
-        ClassRoom classRoom = new ClassRoomDAO(factory).getClassRoom(classroomId);
+//        ClassRoom classRoom = new ClassRoomDAO(factory).getClassRoom(classroomId);
         PersonDetails userDetails = new PersonDetails(name, email, phoneNumber);
         Student student = new Student(userDetails, mentor);
-        student.setClass(classRoom);
+//        student.setClass(classRoom);
         return student;
     }
 
