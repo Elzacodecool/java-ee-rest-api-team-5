@@ -1,8 +1,9 @@
 package com.codecool.model;
 
+import com.google.gson.annotations.Expose;
+
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -11,19 +12,22 @@ import java.util.Set;
 public class Mentor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Expose
     private int id;
 
     @OneToOne(orphanRemoval = true)
+    @Expose
     private PersonDetails details;
 
     @ManyToMany
-    private transient List<Language> languages;
+    @Expose
+    private List<Language> languages;
 
-    @OneToMany(mappedBy = "mentorsList")
-    private transient List<ClassRoom> classRoom = new ArrayList<>();
+    @ManyToMany(mappedBy = "mentorsList", cascade = CascadeType.MERGE)
+    private List<ClassRoom> classRooms = new ArrayList<>();
 
-    @OneToMany(mappedBy = "personalMentor")
-    private transient List<Student> students;
+    @OneToMany(mappedBy = "personalMentor", cascade = CascadeType.MERGE)
+    private List<Student> students = new ArrayList<>();
 
     public Mentor() {
     }
@@ -41,7 +45,7 @@ public class Mentor {
         this.languages = languages;
     }
     public void addClass(ClassRoom classRoom) {
-        this.classRoom.add(classRoom);
+        this.classRooms.add(classRoom);
     }
 
     public PersonDetails getDetails() {
@@ -52,9 +56,11 @@ public class Mentor {
         details = personDetails;
     }
 
-    @PreRemove
-    public void nullificarStudents() {
-        students.forEach(student -> student.setPersonalMentor(null));
-        students = null;
+    public List<ClassRoom> getClassRooms() {
+        return classRooms;
+    }
+
+    public List<Student> getStudents() {
+        return students;
     }
 }

@@ -1,5 +1,7 @@
 package com.codecool.model;
 
+import com.google.gson.annotations.Expose;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 
@@ -8,19 +10,24 @@ import java.util.List;
 
 @Entity
 public class ClassRoom {
-    @OneToMany(mappedBy = "classRoom")
-    @ElementCollection
-    List<Student> studentsList = new ArrayList<>();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Expose
     private int id;
 
+    @Expose
     private String className;
 
     @ManyToMany(mappedBy = "classRoom")
     @ElementCollection
+    @Expose
     private List<Mentor> mentorsList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "classRoom", cascade = {CascadeType.MERGE, CascadeType.DETACH})
+    @ElementCollection
+    @Expose
+    private List<Student> studentsList = new ArrayList<>();
 
     public ClassRoom() {}
 
@@ -49,6 +56,7 @@ public class ClassRoom {
     }
 
     public void addStudent(Student student) {
+
         studentsList.add(student);
         student.setClass(this);
     }
@@ -56,5 +64,9 @@ public class ClassRoom {
     public void addMentor(Mentor mentor) {
         this.mentorsList.add(mentor);
         mentor.addClass(this);
+    }
+
+    public void deleteMentor(Mentor mentor) {
+        this.mentorsList.remove(mentor);
     }
 }

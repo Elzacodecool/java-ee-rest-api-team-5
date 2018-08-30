@@ -5,6 +5,7 @@ import com.codecool.DAOFactory.MentorDAO;
 import com.codecool.DAOFactory.StudentDAO;
 import com.codecool.model.*;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -110,14 +111,14 @@ public class StudentServlet extends HttpServlet {
         String email = request.getParameter("email");
         String phoneNumber = request.getParameter("phoneNumber");
         int personalMentorId = Integer.parseInt(request.getParameter("personalMentor"));
-        int classroomId = Integer.parseInt(request.getParameter("classroom"));
+//        int classroomId = Integer.parseInt(request.getParameter("classroom"));
         EntityManagerFactory factory = studentDAO.getEntityManagerFactory();
 
         Mentor mentor = new MentorDAO(factory).getMentor(personalMentorId);
-        ClassRoom classRoom = new ClassRoomDAO(factory).getClassRoom(classroomId);
+//        ClassRoom classRoom = new ClassRoomDAO(factory).getClassRoom(classroomId);
         PersonDetails userDetails = new PersonDetails(name, email, phoneNumber);
         Student student = new Student(userDetails, mentor);
-        student.setClass(classRoom);
+//        student.setClass(classRoom);
         return student;
     }
 
@@ -153,8 +154,7 @@ public class StudentServlet extends HttpServlet {
         studentDAO.open();
         List<Student> studentList = studentDAO.getAllStudents();
         studentDAO.close();
-        String json = new Gson().toJson(studentList);
-        return json;
+        return new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create().toJson(studentList);
         /*JSONArray array = new JSONArray();
 
         for (Student student: studentList) {
@@ -174,8 +174,7 @@ public class StudentServlet extends HttpServlet {
         json.put("phoneNumber", personDetails.getPhoneNumber());
         json.put("personalMentor", student.getPersonalMentor().getDetails().getName());
         json.put("classroom", classRoom != null ? classRoom.getClassName(): "none");*/
-        String json = new Gson().toJson(student);
-        return json;
+        return new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create().toJson(student);
     }
 
     private void populateDb(StudentDAO studentDAO) {

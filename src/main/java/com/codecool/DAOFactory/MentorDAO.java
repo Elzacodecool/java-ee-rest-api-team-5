@@ -2,26 +2,16 @@ package com.codecool.DAOFactory;
 
 import com.codecool.model.Language;
 import com.codecool.model.Mentor;
-import com.codecool.model.PersonDetails;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
-import java.util.ArrayList;
 import java.util.List;
 
 public class MentorDAO {
-    private EntityManagerFactory entityManagerFactory;
     private EntityManager entityManager;
 
-    public MentorDAO(){
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("codecoolPU");
-        this.entityManager = entityManagerFactory.createEntityManager();
-    }
-
-    public MentorDAO(EntityManagerFactory entityManagerFactory) {
-        this.entityManagerFactory = entityManagerFactory;
+    public MentorDAO(EntityManagerFactory entityManagerFactory){
         this.entityManager = entityManagerFactory.createEntityManager();
     }
 
@@ -29,10 +19,12 @@ public class MentorDAO {
         return entityManager.find(Mentor.class, id );
     }
 
+    @SuppressWarnings("unchecked")
     public List<Mentor> getAllMentors() {
         return entityManager.createQuery( "SELECT m FROM Mentor m" )
                 .getResultList();
     }
+
     public void addMentor(Mentor mentor) {
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
@@ -50,6 +42,8 @@ public class MentorDAO {
 
     public void deleteMentor(Mentor mentor) {
         EntityTransaction transaction = entityManager.getTransaction();
+        mentor.getClassRooms().forEach(classRoom -> classRoom.deleteMentor(mentor));
+        mentor.getStudents().forEach(student -> student.setPersonalMentor(null));
         transaction.begin();
         entityManager.remove(mentor);
         transaction.commit();
@@ -57,17 +51,5 @@ public class MentorDAO {
 
     public void deleteMentor(int id) {
         deleteMentor(getMentor(id));
-    }
-    public static void main(String[] args) {
-        MentorDAO mentorDAO = new MentorDAO();
-
-        PersonDetails personDetails = new PersonDetails("eliza", "email", "phone");
-        List<Language> languages = new ArrayList<>();
-        languages.add(new Language("java"));
-
-        Mentor mentor = new Mentor(personDetails, languages);
-        mentorDAO.deleteMentor(4);
-        System.out.println("after delete");
-
     }
 }

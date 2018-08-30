@@ -1,8 +1,10 @@
 package com.codecool;
 
+import com.codecool.DAOFactory.MentorDAO;
 import com.codecool.DAOFactory.ClassRoomDAO;
 import com.codecool.DAOFactory.StudentDAO;
 import com.codecool.servlets.ClassroomServlet;
+import com.codecool.servlets.MentorServlet;
 import com.codecool.servlets.StudentServlet;
 
 import javax.persistence.EntityManagerFactory;
@@ -19,6 +21,7 @@ public class App implements ServletContextListener {
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("codecoolPU");
         ServletContext servletContext = servletContextEvent.getServletContext();
+        servletContext.addServlet("mentors", new MentorServlet(new MentorDAO(factory)));
         servletContext.addServlet("students", new StudentServlet(new StudentDAO(factory)));
         servletContext.addServlet("classrooms", new ClassroomServlet(new ClassRoomDAO(factory)));
     }

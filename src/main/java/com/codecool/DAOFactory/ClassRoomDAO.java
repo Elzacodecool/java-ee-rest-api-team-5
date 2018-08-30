@@ -33,7 +33,9 @@ public class ClassRoomDAO {
     }
 
     public ClassRoom getClassRoom(int id) {
-        return entityManager.find(ClassRoom.class, id);
+        ClassRoom classRoom = entityManager.find(ClassRoom.class, id);
+        System.out.println("size students" + classRoom.getStudentsList().size());
+        return classRoom;
     }
 
     public void deleteClassRoom(int id) {
@@ -46,31 +48,36 @@ public class ClassRoomDAO {
     public void editClassRoomName(int classRoomId, String name) {
         ClassRoom classRoom = getClassRoom(classRoomId);
         classRoom.setClassName(name);
-        EntityTransaction transaction = entityManager.getTransaction();
-        transaction.begin();
-        entityManager.merge(classRoom);
-        transaction.commit();
+        editClassroom(classRoom);
     }
 
     public void addStudent(int classRoomId, int studentID) {
         Student student = new StudentDAO(entityManagerFactory).getStudent(studentID);
+        if (student.getClassRoom() != null) {
+            student.getClassRoom().getStudentsList().remove(student);
+            editClassroom(student.getClassRoom());
+        }
         ClassRoom classRoom = getClassRoom(classRoomId);
         classRoom.addStudent(student);
+
+        editClassroom(classRoom);
+    }
+
+    public void addMentor(int classRoomId, int mentorId) {
+        Mentor mentor = new MentorDAO(entityManagerFactory).getMentor(mentorId);
+        ClassRoom classRoom = getClassRoom(classRoomId);
+        classRoom.addMentor(mentor);
+        editClassroom(classRoom);
+    }
+
+    private void editClassroom(ClassRoom classRoom) {
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         entityManager.merge(classRoom);
         transaction.commit();
     }
 
-    public void addMentor(int classRoomId, int mentorID) {
-        Mentor mentor = new MentorDAO(entityManagerFactory).getMentor(mentorID);
-        ClassRoom classRoom = getClassRoom(classRoomId);
-        classRoom.addMentor(mentor);
-        EntityTransaction transaction = entityManager.getTransaction();
-        transaction.begin();
-        entityManager.merge(classRoom);
-        transaction.commit();
-    }
+
 
 
 
