@@ -21,14 +21,13 @@ public class Mentor {
 
     @ManyToMany
     @Expose
-    private transient List<Language> languages;
+    private List<Language> languages;
 
-    @OneToMany(mappedBy = "mentorsList")
     @ManyToMany(mappedBy = "mentorsList", cascade = CascadeType.ALL)
-    private transient List<ClassRoom> classRooms = new ArrayList<>();
+    private List<ClassRoom> classRooms = new ArrayList<>();
 
     @OneToMany(mappedBy = "personalMentor")
-    private transient List<Student> students;
+    private List<Student> students;
 
     public Mentor() {
     }

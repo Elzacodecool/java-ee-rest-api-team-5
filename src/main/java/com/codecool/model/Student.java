@@ -20,7 +20,7 @@ public class Student {
     @Expose
     private Mentor personalMentor;
 
-    @OneToOne
+    @ManyToOne
     private ClassRoom classRoom;
 
     public Student() {

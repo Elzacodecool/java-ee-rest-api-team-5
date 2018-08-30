@@ -3,6 +3,7 @@ package com.codecool.servlets;
 import com.codecool.DAOFactory.ClassRoomDAO;
 import com.codecool.model.ClassRoom;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 
 import javax.servlet.ServletException;
@@ -55,12 +56,12 @@ public class ClassroomServlet extends HttpServlet {
 
     private String getJSONAllClasses(String pathInfo) {
         if(pathInfo==null) {
-            return new Gson().toJson(classRoomDAO.getAllClasses());
+            return new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create().toJson(classRoomDAO.getAllClasses());
         } else {
             int id = Integer.valueOf(pathInfo.split("/")[1]);
             System.out.println(id);
             ClassRoom classRoom = classRoomDAO.getClassRoom(id);
-            return new Gson().toJson(classRoom);
+            return new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create().toJson(classRoom);
         }
     }
 
