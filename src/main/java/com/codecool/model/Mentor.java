@@ -5,6 +5,7 @@ import com.google.gson.annotations.Expose;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "mentors")
@@ -19,14 +20,17 @@ public class Mentor {
     private PersonDetails details;
 
     @ManyToMany
+    private transient List<Language> languages;
     @Expose
     private List<Language> languages;
 
+    @OneToMany(mappedBy = "mentorsList")
+    private transient List<ClassRoom> classRoom = new ArrayList<>();
     @ManyToMany(mappedBy = "mentorsList", cascade = CascadeType.ALL)
     private List<ClassRoom> classRooms = new ArrayList<>();
 
     @OneToMany(mappedBy = "personalMentor")
-    private List<Student> students;
+    private transient List<Student> students;
 
     public Mentor() {
     }
