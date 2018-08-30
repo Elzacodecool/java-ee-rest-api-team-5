@@ -23,11 +23,11 @@ public class Mentor {
     @Expose
     private List<Language> languages;
 
-    @ManyToMany(mappedBy = "mentorsList", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "mentorsList", cascade = CascadeType.MERGE)
     private List<ClassRoom> classRooms = new ArrayList<>();
 
-    @OneToMany(mappedBy = "personalMentor")
-    private List<Student> students;
+    @OneToMany(mappedBy = "personalMentor", cascade = CascadeType.MERGE)
+    private List<Student> students = new ArrayList<>();
 
     public Mentor() {
     }
@@ -62,10 +62,5 @@ public class Mentor {
 
     public List<Student> getStudents() {
         return students;
-    }
-
-    @PreRemove
-    public void nullificarStudents() {
-        students.forEach(student -> student.setPersonalMentor(null));
     }
 }
