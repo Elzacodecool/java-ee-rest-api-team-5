@@ -3,6 +3,7 @@ package com.codecool.servlets;
 import com.codecool.DAOFactory.MentorDAO;
 import com.codecool.DAOFactory.StudentDAO;
 import com.codecool.model.*;
+import com.google.gson.Gson;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -21,8 +22,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
-@WebServlet(name="student",
-        urlPatterns = {"/student/*"})
+@WebServlet(name="students",
+        urlPatterns = {"/students/*"})
 public class StudentServlet extends HttpServlet {
 
     private static StudentDAO studentDAO;
@@ -69,7 +70,7 @@ public class StudentServlet extends HttpServlet {
             studentDAO.close();
 
             response.setHeader("Content-Type", "application/json");
-            response.getWriter().write(getJSONStudent(student).toString());
+            response.getWriter().write(getJSONStudent(student));
 
 
         }
@@ -129,17 +130,18 @@ public class StudentServlet extends HttpServlet {
         studentDAO.open();
         List<Student> studentList = studentDAO.getAllStudents();
         studentDAO.close();
-
-        JSONArray array = new JSONArray();
+        String json = new Gson().toJson(studentList);
+        return json;
+        /*JSONArray array = new JSONArray();
 
         for (Student student: studentList) {
             array.put(getJSONStudent(student));
         }
-        return array.toString();
+        return array.toString();*/
     }
 
-    private JSONObject getJSONStudent(Student student) {
-        JSONObject json = new JSONObject();
+    private String getJSONStudent(Student student) {
+        /*JSONObject json = new JSONObject();
         PersonDetails personDetails = student.getDetails();
         ClassRoom classRoom = student.getClassRoom();
 
@@ -148,7 +150,8 @@ public class StudentServlet extends HttpServlet {
         json.put("email", personDetails.getEmail());
         json.put("phoneNumber", personDetails.getPhoneNumber());
         json.put("personalMentor", student.getPersonalMentor().getDetails().getName());
-        json.put("classroom", classRoom != null ? classRoom.getClassName(): "none");
+        json.put("classroom", classRoom != null ? classRoom.getClassName(): "none");*/
+        String json = new Gson().toJson(student);
         return json;
     }
 
