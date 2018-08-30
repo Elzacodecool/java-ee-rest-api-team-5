@@ -53,6 +53,17 @@ public class StudentDAO {
     }
 
 
+    public void deleteStudent(int id) {
+        Student student = getStudent(id);
+        PersonDetails personDetails = student.getDetails();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        entityManager.remove(personDetails);
+        entityManager.remove(student);
+        transaction.commit();
+    }
+
+
     private Student changeStudentData(Student student, Map<String, String> updatedValues) {
         for (String key: updatedValues.keySet()) {
             String updatedValue = updatedValues.get(key);
