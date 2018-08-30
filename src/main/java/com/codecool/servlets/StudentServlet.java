@@ -87,6 +87,18 @@ public class StudentServlet extends HttpServlet {
         }
     }
 
+    @Override
+    public void doDelete(HttpServletRequest request, HttpServletResponse response) {
+        String pathInfo = request.getPathInfo();
+
+        if (pathInfo != null) {
+            int studentId = parseStudentId(pathInfo);
+            studentDAO.open();
+            studentDAO.deleteStudent(studentId);
+            studentDAO.close();
+        }
+    }
+
     private Student createStudent(HttpServletRequest request) {
         String name = request.getParameter("name");
         String email = request.getParameter("email");
