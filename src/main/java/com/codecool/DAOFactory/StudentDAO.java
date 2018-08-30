@@ -4,17 +4,21 @@ import com.codecool.model.*;
 import org.hibernate.Session;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class StudentDAO {
 
     private EntityManagerFactory entityManagerFactory;
     private EntityManager entityManager;
 
-    public StudentDAO() {
-        entityManagerFactory = Persistence.createEntityManagerFactory("codecoolPU");
+    public StudentDAO(EntityManagerFactory entityManagerFactory) {
+        this.entityManagerFactory = entityManagerFactory;
         entityManager = entityManagerFactory.createEntityManager();
+    }
+
+    public EntityManagerFactory getEntityManagerFactory() {
+        return entityManagerFactory;
     }
 
     public void addStudent(Student student) {
@@ -36,49 +40,36 @@ public class StudentDAO {
 
     }
 
+    public void updateStudent(Student student, Map<String, String> updatedValues) {
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        entityManager.merge(changeStudentData(student, updatedValues));
+        transaction.commit();
+    }
+
+    private Student changeStudentData(Student student, Map<String, String> updatedValues) {
+        for (String key: updatedValues.keySet()) {
+            String updatedValue = updatedValues.get(key);
+            if (key.equals("name")) {
+                student.getDetails().setName(updatedValue);
+            } else if (key.equals("email")) {
+                student.getDetails().setEmail(updatedValue);
+            } else if (key.equals("phoneNumber")) {
+                student.getDetails().setPhoneNumber(updatedValue);
+            } else if (key.equals("personalMentor")) {
+                int mentorId = Integer.parseInt(updatedValue);
+                Mentor mentor = new MentorDAO(entityManagerFactory).getMentor(mentorId);
+                student.setPersonalMentor(mentor);
+            }
+        }
+        return student;
+    }
+
     public void close() {
         entityManager.close();
     }
 
     public void open() {
         entityManager = entityManagerFactory.createEntityManager();
-    }
-
-
-    public static void main(String[] args) {
-        StudentDAO studentDAO = new StudentDAO();
-        Language language = new Language("Java");
-
-        List<Language> languages = new ArrayList<>();
-        languages.add(language);
-
-        PersonDetails personDetails = new PersonDetails("Imie Nazwisko", "Email", "Numer tel");
-
-        Mentor mentor = new Mentor(personDetails, languages);
-        PersonDetails studentDetails = new PersonDetails("Student Name", "Student email", "phone number");
-        Student student = new Student(studentDetails, mentor);
-        ClassRoom classRoom = new ClassRoom("WEB");
-        Student student2 = new Student(new PersonDetails("Second student", "email", "number"), mentor);
-
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("codecoolPU");
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
-
-        transaction.begin();
-        entityManager.persist(language);
-        entityManager.persist(personDetails);
-        entityManager.persist(mentor);
-        entityManager.persist(classRoom);
-        transaction.commit();
-
-        entityManager.close();
-        entityManagerFactory.close();
-
-        studentDAO.addStudent(student2);
-        studentDAO.addStudent(student);
-
-
-        List<Student> students = studentDAO.getAllStudents();
-        studentDAO.close();
     }
 }
