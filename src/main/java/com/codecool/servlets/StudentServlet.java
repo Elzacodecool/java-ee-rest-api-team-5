@@ -3,6 +3,7 @@ package com.codecool.servlets;
 import com.codecool.DAOFactory.MentorDAO;
 import com.codecool.DAOFactory.StudentDAO;
 import com.codecool.model.*;
+import com.google.gson.Gson;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -21,8 +22,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
-@WebServlet(name="student",
-        urlPatterns = {"/student/*"})
+@WebServlet(name="students",
+        urlPatterns = {"/students/*"})
 public class StudentServlet extends HttpServlet {
 
     private static StudentDAO studentDAO;
@@ -62,35 +63,60 @@ public class StudentServlet extends HttpServlet {
         String pathInfo = request.getPathInfo();
 //        populateDb(studentDAO);
         if (pathInfo == null) {
+            Student student = createStudent(request);
+
             studentDAO.open();
-            String name = request.getParameter("name");
-            String email = request.getParameter("email");
-            String phoneNumber = request.getParameter("phoneNumber");
-            int personalMentorId = Integer.parseInt(request.getParameter("personalMentor"));
-
-            Mentor mentor = new MentorDAO(studentDAO.getEntityManagerFactory()).getMentor(personalMentorId);
-
-            PersonDetails userDetails = new PersonDetails(name, email, phoneNumber);
-            Student student = new Student(userDetails, mentor);
             studentDAO.addStudent(student);
-            response.setHeader("Content-Type", "application/json");
-            response.getWriter().write(getJSONStudent(student).toString());
-
             studentDAO.close();
+
+            response.setHeader("Content-Type", "application/json");
+            response.getWriter().write(getJSONStudent(student));
         }
     }
 
     @Override
-    public void doPut(HttpServletRequest request, HttpServletResponse response) {
+    public void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String pathInfo = request.getPathInfo();
 
         if (pathInfo != null) {
-            studentDAO.open();
             int studentId = parseStudentId(pathInfo);
+
+            studentDAO.open();
             Student student = studentDAO.getStudent(studentId);
             studentDAO.updateStudent(student, getUpdatedValues(request));
+            studentDAO.close();
+
+            response.setHeader("Content-Type", "application/json");
+            response.getWriter().write(getJSONStudent(student));
+
         }
     }
+
+    @Override
+    public void doDelete(HttpServletRequest request, HttpServletResponse response) {
+        String pathInfo = request.getPathInfo();
+
+        if (pathInfo != null) {
+            int studentId = parseStudentId(pathInfo);
+            studentDAO.open();
+            studentDAO.deleteStudent(studentId);
+            studentDAO.close();
+        }
+    }
+
+    private Student createStudent(HttpServletRequest request) {
+        String name = request.getParameter("name");
+        String email = request.getParameter("email");
+        String phoneNumber = request.getParameter("phoneNumber");
+        int personalMentorId = Integer.parseInt(request.getParameter("personalMentor"));
+
+        Mentor mentor = new MentorDAO(studentDAO.getEntityManagerFactory()).getMentor(personalMentorId);
+        PersonDetails userDetails = new PersonDetails(name, email, phoneNumber);
+        Student student = new Student(userDetails, mentor);
+        return student;
+    }
+
+
 
     private Map<String, String> getUpdatedValues(HttpServletRequest request) {
         Map<String, String> updatedValues = new HashMap<>();
@@ -104,11 +130,11 @@ public class StudentServlet extends HttpServlet {
 
     private int parseStudentId(String pathInfo) {
         String[] splittedPathInfo = pathInfo.split("/");
-        List<String> clearSplittedPathInfo = clearSplitedPathInfo(splittedPathInfo);
+        List<String> clearSplittedPathInfo = clearSplittedPathInfo(splittedPathInfo);
         return Integer.parseInt(clearSplittedPathInfo.get(0));
     }
 
-    private List<String> clearSplitedPathInfo(String[] pathInfo) {
+    private List<String> clearSplittedPathInfo(String[] pathInfo) {
         List<String> clearPathInfo = new ArrayList<>();
         for (String pathElement: pathInfo) {
             if (!pathElement.equals("")) {
@@ -122,17 +148,18 @@ public class StudentServlet extends HttpServlet {
         studentDAO.open();
         List<Student> studentList = studentDAO.getAllStudents();
         studentDAO.close();
+        String json = new Gson().toJson(studentList);
+        return json;
+        /*JSONArray array = new JSONArray();
 
-        JSONArray array = new JSONArray();
-        System.out.println(studentList.size());
         for (Student student: studentList) {
             array.put(getJSONStudent(student));
         }
-        return array.toString();
+        return array.toString();*/
     }
 
-    private JSONObject getJSONStudent(Student student) {
-        JSONObject json = new JSONObject();
+    private String getJSONStudent(Student student) {
+        /*JSONObject json = new JSONObject();
         PersonDetails personDetails = student.getDetails();
         ClassRoom classRoom = student.getClassRoom();
 
@@ -141,7 +168,8 @@ public class StudentServlet extends HttpServlet {
         json.put("email", personDetails.getEmail());
         json.put("phoneNumber", personDetails.getPhoneNumber());
         json.put("personalMentor", student.getPersonalMentor().getDetails().getName());
-        json.put("classroom", classRoom != null ? classRoom.getClassName(): "none");
+        json.put("classroom", classRoom != null ? classRoom.getClassName(): "none");*/
+        String json = new Gson().toJson(student);
         return json;
     }
 
