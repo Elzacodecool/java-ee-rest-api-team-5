@@ -18,7 +18,7 @@ public class Student {
 
     @ManyToOne
     @Expose
-    private Mentor personalMentor;
+    private Mentor personalMentor = null;
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH})
     private ClassRoom classRoom;

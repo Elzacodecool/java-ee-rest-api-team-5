@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -15,7 +16,7 @@ public class Mentor {
     @Expose
     private int id;
 
-    @OneToOne(orphanRemoval = true)
+    @OneToOne(orphanRemoval = true, cascade = CascadeType.MERGE)
     @Expose
     private PersonDetails details;
 
@@ -23,8 +24,8 @@ public class Mentor {
     @Expose
     private List<Language> languages;
 
-    @ManyToMany(mappedBy = "mentorsList", cascade = CascadeType.MERGE)
-    private List<ClassRoom> classRooms = new ArrayList<>();
+    @ManyToMany(cascade = CascadeType.MERGE)
+    private Set<ClassRoom> classRooms = new HashSet<>();
 
     @OneToMany(mappedBy = "personalMentor", cascade = CascadeType.MERGE)
     private List<Student> students = new ArrayList<>();
@@ -56,7 +57,7 @@ public class Mentor {
         details = personDetails;
     }
 
-    public List<ClassRoom> getClassRooms() {
+    public Set<ClassRoom> getClassRooms() {
         return classRooms;
     }
 

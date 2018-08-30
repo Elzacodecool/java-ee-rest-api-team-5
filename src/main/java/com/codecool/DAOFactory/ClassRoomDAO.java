@@ -42,7 +42,7 @@ public class ClassRoomDAO {
         EntityTransaction transaction = entityManager.getTransaction();
         ClassRoom classRoom = getClassRoom(id);
         classRoom.getStudentsList().forEach(student -> student.setClass(null));
-        classRoom.getMentorsList().forEach(mentor -> mentor.getClassRooms().remove(classRoom));
+        classRoom.getMentors().forEach(mentor -> mentor.getClassRooms().remove(classRoom));
         transaction.begin();
         entityManager.remove(classRoom);
         transaction.commit();

@@ -5,7 +5,9 @@ import com.google.gson.annotations.Expose;
 import javax.persistence.*;
 import java.util.ArrayList;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -20,13 +22,11 @@ public class ClassRoom {
     @Expose
     private String className;
 
-    @ManyToMany(mappedBy = "classRoom")
-    @ElementCollection
+    @ManyToMany(mappedBy = "classRooms", cascade = {CascadeType.MERGE, CascadeType.DETACH})
     @Expose
-    private List<Mentor> mentorsList = new ArrayList<>();
+    private Set<Mentor> mentors = new HashSet<>();
 
     @OneToMany(mappedBy = "classRoom", cascade = {CascadeType.MERGE, CascadeType.DETACH})
-    @ElementCollection
     @Expose
     private List<Student> studentsList = new ArrayList<>();
 
@@ -48,8 +48,8 @@ public class ClassRoom {
         return studentsList;
     }
 
-    public List<Mentor> getMentorsList() {
-        return mentorsList;
+    public Set<Mentor> getMentors() {
+        return mentors;
     }
 
     public int getId() {
@@ -63,11 +63,11 @@ public class ClassRoom {
     }
 
     public void addMentor(Mentor mentor) {
-        this.mentorsList.add(mentor);
+        this.mentors.add(mentor);
         mentor.addClass(this);
     }
 
     public void deleteMentor(Mentor mentor) {
-        this.mentorsList.remove(mentor);
+        this.mentors.remove(mentor);
     }
 }
