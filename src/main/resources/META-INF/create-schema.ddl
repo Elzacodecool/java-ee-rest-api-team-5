@@ -280,3 +280,35 @@ alter table if exists mentors_Language add constraint FKg90j6q8xjjjelvgtw75r0ufd
 alter table if exists students add constraint FK2q5pwttal0taqyah9w0yaqk2v foreign key (classRoom_id) references ClassRoom
 alter table if exists students add constraint FKhnar0nl4s1g8sh17r32nmw2au foreign key (details_id) references PersonDetails
 alter table if exists students add constraint FK5wwavpby5g4u3tm21rfn8vqck foreign key (personalMentor_id) references mentors
+create table classrooms (id  serial not null, className varchar(255), primary key (id))
+create table classrooms_mentors (classRooms_id int4 not null, mentorsList_id int4 not null)
+create table Language (id  serial not null, name varchar(255), primary key (id))
+create table mentors (id  serial not null, details_id int4, primary key (id))
+create table mentors_Language (Mentor_id int4 not null, languages_id int4 not null)
+create table PersonDetails (id  serial not null, email varchar(255), name varchar(255), phoneNumber varchar(255), primary key (id))
+create table students (id  serial not null, classRoom_id int4, details_id int4, personalMentor_id int4, primary key (id))
+alter table if exists classrooms_mentors add constraint UK_4qi2xwvbd4s8e2lvtaxyh9t5d unique (mentorsList_id)
+alter table if exists classrooms_mentors add constraint FKc39jr75xctseyute9ixft3ycp foreign key (mentorsList_id) references mentors
+alter table if exists classrooms_mentors add constraint FKju8k3w2keiap31gfjp5uigttp foreign key (classRooms_id) references classrooms
+alter table if exists mentors add constraint FKf865ocg369h7uqw744wiw0ef8 foreign key (details_id) references PersonDetails
+alter table if exists mentors_Language add constraint FKa0hvr6hjldkw6aq960ds4445 foreign key (languages_id) references Language
+alter table if exists mentors_Language add constraint FKg90j6q8xjjjelvgtw75r0ufdc foreign key (Mentor_id) references mentors
+alter table if exists students add constraint FKhtgh1unrqbywmlyrb6l1o3g5c foreign key (classRoom_id) references classrooms
+alter table if exists students add constraint FKhnar0nl4s1g8sh17r32nmw2au foreign key (details_id) references PersonDetails
+alter table if exists students add constraint FK5wwavpby5g4u3tm21rfn8vqck foreign key (personalMentor_id) references mentors
+create table classrooms (id  serial not null, className varchar(255), primary key (id))
+create table classrooms_mentors (classRooms_id int4 not null, mentorsList_id int4 not null)
+create table Language (id  serial not null, name varchar(255), primary key (id))
+create table mentors (id  serial not null, details_id int4, primary key (id))
+create table mentors_Language (Mentor_id int4 not null, languages_id int4 not null)
+create table PersonDetails (id  serial not null, email varchar(255), name varchar(255), phoneNumber varchar(255), primary key (id))
+create table students (id  serial not null, classRoom_id int4, details_id int4, personalMentor_id int4, primary key (id))
+alter table if exists classrooms_mentors add constraint UK_4qi2xwvbd4s8e2lvtaxyh9t5d unique (mentorsList_id)
+alter table if exists classrooms_mentors add constraint FKc39jr75xctseyute9ixft3ycp foreign key (mentorsList_id) references mentors
+alter table if exists classrooms_mentors add constraint FKju8k3w2keiap31gfjp5uigttp foreign key (classRooms_id) references classrooms
+alter table if exists mentors add constraint FKf865ocg369h7uqw744wiw0ef8 foreign key (details_id) references PersonDetails
+alter table if exists mentors_Language add constraint FKa0hvr6hjldkw6aq960ds4445 foreign key (languages_id) references Language
+alter table if exists mentors_Language add constraint FKg90j6q8xjjjelvgtw75r0ufdc foreign key (Mentor_id) references mentors
+alter table if exists students add constraint FKhtgh1unrqbywmlyrb6l1o3g5c foreign key (classRoom_id) references classrooms
+alter table if exists students add constraint FKhnar0nl4s1g8sh17r32nmw2au foreign key (details_id) references PersonDetails
+alter table if exists students add constraint FK5wwavpby5g4u3tm21rfn8vqck foreign key (personalMentor_id) references mentors

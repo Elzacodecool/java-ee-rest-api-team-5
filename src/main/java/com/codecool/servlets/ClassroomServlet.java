@@ -83,7 +83,6 @@ public class ClassroomServlet extends HttpServlet {
                     break;
 
                 case "add-mentor-to-class":
-                    System.out.println("in ifffff");
                     int mentorID = Integer.valueOf(parameters[3]);
                     classRoomDAO.addMentor(classRoomId, mentorID);
                     break;

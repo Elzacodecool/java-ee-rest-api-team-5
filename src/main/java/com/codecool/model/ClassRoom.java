@@ -9,6 +9,7 @@ import java.util.List;
 
 
 @Entity
+@Table(name = "classrooms")
 public class ClassRoom {
 
     @Id
