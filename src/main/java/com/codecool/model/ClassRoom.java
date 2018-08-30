@@ -44,6 +44,10 @@ public class ClassRoom {
         return mentorsList;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public void addStudent(Student student) {
         studentsList.add(student);
         student.setClass(this);
