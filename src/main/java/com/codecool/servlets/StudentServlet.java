@@ -62,22 +62,29 @@ public class StudentServlet extends HttpServlet {
         String pathInfo = request.getPathInfo();
 //        populateDb(studentDAO);
         if (pathInfo == null) {
+            Student student = createStudent(request);
+
             studentDAO.open();
-            String name = request.getParameter("name");
-            String email = request.getParameter("email");
-            String phoneNumber = request.getParameter("phoneNumber");
-            int personalMentorId = Integer.parseInt(request.getParameter("personalMentor"));
-
-            Mentor mentor = new MentorDAO(studentDAO.getEntityManagerFactory()).getMentor(personalMentorId);
-
-            PersonDetails userDetails = new PersonDetails(name, email, phoneNumber);
-            Student student = new Student(userDetails, mentor);
             studentDAO.addStudent(student);
+            studentDAO.close();
+
             response.setHeader("Content-Type", "application/json");
             response.getWriter().write(getJSONStudent(student).toString());
 
-            studentDAO.close();
+
         }
+    }
+
+    private Student createStudent(HttpServletRequest request) {
+        String name = request.getParameter("name");
+        String email = request.getParameter("email");
+        String phoneNumber = request.getParameter("phoneNumber");
+        int personalMentorId = Integer.parseInt(request.getParameter("personalMentor"));
+
+        Mentor mentor = new MentorDAO(studentDAO.getEntityManagerFactory()).getMentor(personalMentorId);
+        PersonDetails userDetails = new PersonDetails(name, email, phoneNumber);
+        Student student = new Student(userDetails, mentor);
+        return student;
     }
 
     @Override
@@ -104,11 +111,11 @@ public class StudentServlet extends HttpServlet {
 
     private int parseStudentId(String pathInfo) {
         String[] splittedPathInfo = pathInfo.split("/");
-        List<String> clearSplittedPathInfo = clearSplitedPathInfo(splittedPathInfo);
+        List<String> clearSplittedPathInfo = clearSplittedPathInfo(splittedPathInfo);
         return Integer.parseInt(clearSplittedPathInfo.get(0));
     }
 
-    private List<String> clearSplitedPathInfo(String[] pathInfo) {
+    private List<String> clearSplittedPathInfo(String[] pathInfo) {
         List<String> clearPathInfo = new ArrayList<>();
         for (String pathElement: pathInfo) {
             if (!pathElement.equals("")) {
@@ -124,7 +131,7 @@ public class StudentServlet extends HttpServlet {
         studentDAO.close();
 
         JSONArray array = new JSONArray();
-        System.out.println(studentList.size());
+
         for (Student student: studentList) {
             array.put(getJSONStudent(student));
         }
