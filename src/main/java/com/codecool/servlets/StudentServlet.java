@@ -75,15 +75,20 @@ public class StudentServlet extends HttpServlet {
     }
 
     @Override
-    public void doPut(HttpServletRequest request, HttpServletResponse response) {
+    public void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String pathInfo = request.getPathInfo();
 
         if (pathInfo != null) {
             int studentId = parseStudentId(pathInfo);
+
             studentDAO.open();
             Student student = studentDAO.getStudent(studentId);
             studentDAO.updateStudent(student, getUpdatedValues(request));
             studentDAO.close();
+
+            response.setHeader("Content-Type", "application/json");
+            response.getWriter().write(getJSONStudent(student));
+
         }
     }
 
