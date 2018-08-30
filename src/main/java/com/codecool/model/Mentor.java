@@ -1,5 +1,7 @@
 package com.codecool.model;
 
+import com.google.gson.annotations.Expose;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +22,8 @@ public class Mentor {
     @Expose
     private List<Language> languages;
 
-    @OneToMany(mappedBy = "mentorsList")
-    private List<ClassRoom> classRoom = new ArrayList<>();
+    @ManyToMany(mappedBy = "mentorsList", cascade = CascadeType.ALL)
+    private List<ClassRoom> classRooms = new ArrayList<>();
 
     @OneToMany(mappedBy = "personalMentor")
     private List<Student> students;
@@ -42,7 +44,7 @@ public class Mentor {
         this.languages = languages;
     }
     public void addClass(ClassRoom classRoom) {
-        this.classRoom.add(classRoom);
+        this.classRooms.add(classRoom);
     }
 
     public PersonDetails getDetails() {
@@ -53,9 +55,16 @@ public class Mentor {
         details = personDetails;
     }
 
+    public List<ClassRoom> getClassRooms() {
+        return classRooms;
+    }
+
+    public List<Student> getStudents() {
+        return students;
+    }
+
     @PreRemove
     public void nullificarStudents() {
         students.forEach(student -> student.setPersonalMentor(null));
-        students = null;
     }
 }
