@@ -1,6 +1,7 @@
 package com.codecool.DAOFactory;
 
 import com.codecool.model.ClassRoom;
+import com.codecool.model.Student;
 import org.hibernate.Session;
 
 import javax.persistence.EntityManager;
@@ -44,6 +45,16 @@ public class ClassRoomDAO {
     public void editClassRoomName(int classRoomId, String name) {
         ClassRoom classRoom = getClassRoom(classRoomId);
         classRoom.setClassName(name);
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        entityManager.merge(classRoom);
+        transaction.commit();
+    }
+
+    public void addStudent(int classRoomId, int studentID) {
+        Student student = new StudentDAO(entityManagerFactory).getStudent(studentID);
+        ClassRoom classRoom = getClassRoom(classRoomId);
+        classRoom.addStudent(student);
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         entityManager.merge(classRoom);
