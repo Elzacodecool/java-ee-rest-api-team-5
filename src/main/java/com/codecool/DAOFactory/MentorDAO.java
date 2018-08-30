@@ -43,9 +43,8 @@ public class MentorDAO {
     public void deleteMentor(Mentor mentor) {
         EntityTransaction transaction = entityManager.getTransaction();
         mentor.getClassRooms().forEach(classRoom -> classRoom.deleteMentor(mentor));
+        mentor.getStudents().forEach(student -> student.setPersonalMentor(null));
         transaction.begin();
-
-        mentor.getClassRooms().forEach(classRoom -> entityManager.merge(classRoom));
         entityManager.remove(mentor);
         transaction.commit();
     }
