@@ -17,9 +17,11 @@ public class StudentDAO {
         entityManager = entityManagerFactory.createEntityManager();
     }
 
+
     public EntityManagerFactory getEntityManagerFactory() {
         return entityManagerFactory;
     }
+
 
     public void addStudent(Student student) {
         EntityTransaction transaction = entityManager.getTransaction();
@@ -29,9 +31,11 @@ public class StudentDAO {
         transaction.commit();
     }
 
+
     public Student getStudent(int id) {
         return entityManager.find(Student.class, id);
     }
+
 
     public List<Student> getAllStudents() {
         Session session = (Session) entityManager.getDelegate();
@@ -40,12 +44,14 @@ public class StudentDAO {
 
     }
 
+
     public void updateStudent(Student student, Map<String, String> updatedValues) {
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         entityManager.merge(changeStudentData(student, updatedValues));
         transaction.commit();
     }
+
 
     private Student changeStudentData(Student student, Map<String, String> updatedValues) {
         for (String key: updatedValues.keySet()) {
@@ -65,9 +71,11 @@ public class StudentDAO {
         return student;
     }
 
+
     public void close() {
         entityManager.close();
     }
+
 
     public void open() {
         entityManager = entityManagerFactory.createEntityManager();
