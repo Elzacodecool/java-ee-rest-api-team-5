@@ -71,8 +71,19 @@ public class StudentServlet extends HttpServlet {
 
             response.setHeader("Content-Type", "application/json");
             response.getWriter().write(getJSONStudent(student));
+        }
+    }
 
+    @Override
+    public void doPut(HttpServletRequest request, HttpServletResponse response) {
+        String pathInfo = request.getPathInfo();
 
+        if (pathInfo != null) {
+            int studentId = parseStudentId(pathInfo);
+            studentDAO.open();
+            Student student = studentDAO.getStudent(studentId);
+            studentDAO.updateStudent(student, getUpdatedValues(request));
+            studentDAO.close();
         }
     }
 
@@ -88,17 +99,7 @@ public class StudentServlet extends HttpServlet {
         return student;
     }
 
-    @Override
-    public void doPut(HttpServletRequest request, HttpServletResponse response) {
-        String pathInfo = request.getPathInfo();
 
-        if (pathInfo != null) {
-            studentDAO.open();
-            int studentId = parseStudentId(pathInfo);
-            Student student = studentDAO.getStudent(studentId);
-            studentDAO.updateStudent(student, getUpdatedValues(request));
-        }
-    }
 
     private Map<String, String> getUpdatedValues(HttpServletRequest request) {
         Map<String, String> updatedValues = new HashMap<>();
