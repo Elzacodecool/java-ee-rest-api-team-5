@@ -20,7 +20,7 @@ public class Student {
     @Expose
     private Mentor personalMentor;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH})
     private ClassRoom classRoom;
 
     public Student() {

@@ -80,11 +80,13 @@ public class ClassroomServlet extends HttpServlet {
                 case "add-student-to-class":
                     int studentID = Integer.valueOf(parameters[3]);
                     classRoomDAO.addStudent(classRoomId, studentID);
+                    break;
 
                 case "add-mentor-to-class":
                     System.out.println("in ifffff");
                     int mentorID = Integer.valueOf(parameters[3]);
                     classRoomDAO.addMentor(classRoomId, mentorID);
+                    break;
             }
         }
     }

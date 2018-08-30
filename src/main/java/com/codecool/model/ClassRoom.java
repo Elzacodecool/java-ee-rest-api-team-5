@@ -24,7 +24,7 @@ public class ClassRoom {
     @Expose
     private List<Mentor> mentorsList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "classRoom")
+    @OneToMany(mappedBy = "classRoom", cascade = {CascadeType.MERGE, CascadeType.DETACH})
     @ElementCollection
     @Expose
     private List<Student> studentsList = new ArrayList<>();
@@ -56,6 +56,7 @@ public class ClassRoom {
     }
 
     public void addStudent(Student student) {
+
         studentsList.add(student);
         student.setClass(this);
     }
