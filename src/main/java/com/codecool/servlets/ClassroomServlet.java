@@ -73,13 +73,17 @@ public class ClassroomServlet extends HttpServlet {
         if(parameters.length == 2) {
             String className = request.getParameter("name");
             classRoomDAO.editClassRoomName(classRoomId, className);
-        } else if (parameters.length == 4) {
+        } else if (parameters.length > 1) {
             switch(parameters[2]) {
+
                 case "add-student-to-class":
                     int studentID = Integer.valueOf(parameters[3]);
                     classRoomDAO.addStudent(classRoomId, studentID);
 
-
+                case "add-mentor-to-class":
+                    System.out.println("in ifffff");
+                    int mentorID = Integer.valueOf(parameters[3]);
+                    classRoomDAO.addMentor(classRoomId, mentorID);
             }
         }
     }

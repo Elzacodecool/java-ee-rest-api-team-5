@@ -10,7 +10,7 @@ import java.util.List;
 public class ClassRoom {
     @OneToMany(mappedBy = "classRoom")
     @ElementCollection
-    transient List<Student> studentsList = new ArrayList<>();
+    List<Student> studentsList = new ArrayList<>();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
