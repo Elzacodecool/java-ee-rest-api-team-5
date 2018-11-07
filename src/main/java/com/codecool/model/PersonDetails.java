@@ -1,19 +1,40 @@
 package com.codecool.model;
 
-public abstract class Person {
+import com.google.gson.annotations.Expose;
 
+import javax.persistence.*;
+
+@Entity
+public class PersonDetails {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Expose
+    private int id;
+
+    @Expose
     private String name;
 
+    @Expose
     private String email;
 
+    @Expose
     private String phoneNumber;
 
-    public Person() {}
+    public PersonDetails() {}
 
-    public Person(String name, String email, String phoneNumber) {
+    public PersonDetails(String name, String email, String phoneNumber) {
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {

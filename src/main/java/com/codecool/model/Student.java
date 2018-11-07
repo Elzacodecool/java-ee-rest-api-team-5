@@ -1,27 +1,34 @@
 package com.codecool.model;
 
-public class Student extends Person {
+import com.google.gson.annotations.Expose;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "students")
+public class Student {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Expose
+    private int id;
+
+    @OneToOne
+    @Expose
+    private PersonDetails details;
+
+    @ManyToOne
+    @Expose
+    private Mentor personalMentor = null;
+
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH})
     private ClassRoom classRoom;
 
-    private Mentor personalMentor;
-
     public Student() {
-        super();
     }
 
-    public Student(String name, String email, String phoneNumber, ClassRoom classRoom, Mentor mentor) {
-        super(name, email, phoneNumber);
-        this.classRoom = classRoom;
+    public Student(PersonDetails details, Mentor mentor) {
+        this.details = details;
         this.personalMentor = mentor;
-    }
-
-    public ClassRoom getClassRoom() {
-        return classRoom;
-    }
-
-    public void setClassRoom(ClassRoom classRoom) {
-        this.classRoom = classRoom;
     }
 
     public Mentor getPersonalMentor() {
@@ -30,5 +37,29 @@ public class Student extends Person {
 
     public void setPersonalMentor(Mentor personalMentor) {
         this.personalMentor = personalMentor;
+    }
+
+    public PersonDetails getDetails() {
+        return details;
+    }
+
+    public void setDetails(PersonDetails personDetails) {
+        details = personDetails;
+    }
+
+    public void setClass(ClassRoom classRoom) {
+        this.classRoom = classRoom;
+    }
+
+    public ClassRoom getClassRoom() {
+        return classRoom;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
