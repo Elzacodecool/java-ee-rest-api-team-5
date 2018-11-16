@@ -1,17 +1,10 @@
 # java-ee-rest-api-team-5
+# Assignment: Your first REST API
+Your task is to create a REST API. What it should do it is up to you ;) However, your application should meet the following requirements:
 
-Create a REST API using Boot. What is this API supposed to do? It is up to you. You only have to conform to the requirements listed below.
-
-## Requirements
-  - Use Spring Boot to create the project.
-  - Define from 2 to 3 resources.
-  - Handle CRUD operations on these resources.
-  - Between two of available resources, relationship has to be defined.
-  - You HAVE to use H2 or PostgreSQL database.
-  - Keep separate concerns of your app - controller, service, repository. Make sure responsibilities are not mixed, e.g. controller is responsible for operating on HTTP layer and passing data further, only.
-
-## So the new requirements are:
-  - Logging of every CRUD operation and exception to a text file using log4j
-  - Data should be safe deleted - archived instead of physically deleted. Users should not see archived data but the data should be present in the database
-  - (Optionally) - send an email whenever an status code 500 is to be sent
+  - there should be at leas three types of resources
+  - there should be at least one relationship among those resources
+  - your application should handle at least GET, POST, PUT and DELETE methods
+  - output format should be a json or xml
+  - use PostgreSQL to store data
 
